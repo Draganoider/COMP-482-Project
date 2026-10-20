@@ -40,6 +40,7 @@ old one instead of editing it.
 
 | # | Date | Decision | Why |
 |---|---|---|---|
+| D5 | 2026-10-20 | `test` is the default branch; `main` stays protected as the release branch. Supersedes the "default branch" part of D2 | GitHub only closes issues from `Closes #N`, uses new templates and targets new pull requests on the default branch. All of those should happen on `test` |
 | D4 | 2026-10-20 | The language is chosen with the topic, not before | The best fit depends on the problem (libraries, timing accuracy, plotting). The repo was set up language-neutral |
 | D3 | 2026-10-20 | No AI attribution lines in commits or pull requests; AI use is disclosed in the README's *AI usage* section | One honest disclosure in a place a grader reads, instead of noise in every commit. Teammate `Co-authored-by` stays allowed |
 | D2 | 2026-10-20 | `main` is the default branch and protected (pull request from `test`, one approval, CI green). `test` takes reviewed pull requests, and direct commits only for small fixes | `main` always holds what we submitted. Small fixes shouldn't wait for a review |

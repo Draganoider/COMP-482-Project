@@ -95,9 +95,9 @@ Planned once the language is chosen (rename to the language's conventions):
 
 ## Branching and pull requests
 
-- **`main`** is the default branch and **protected**: changes arrive only as a pull request from
+- **`test`** is the default branch, and where all work lands. Not protected.
+- **`main`** is the release branch, and **protected**: changes arrive only as a pull request from
   `test`, approved by one teammate, with CI green. It holds what was submitted, tagged per phase.
-- **`test`** is where all work lands. Not protected.
 - Work branches come off `test`: `feature/...`, `fix/...`, `exp/...` (experiments),
   `docs/...`, `chore/...`.
 
@@ -106,11 +106,11 @@ git switch test && git pull
 git switch -c feature/short-name
 # ... work, commit ...
 git push -u origin feature/short-name
-gh pr create --base test            # NOT main, which is the default
+gh pr create                        # into test, the default
 ```
 
-**`--base test` matters.** `main` is the default branch, so GitHub proposes `main` for every new
-pull request. A pull request into `main` from anything but `test` is wrong; retarget it.
+A pull request into `main` from anything but `test` is wrong; retarget it to `test`. Because `test`
+is the default branch, `Closes #N` closes the issue when the pull request merges into `test`.
 
 **A direct commit to `test` is fine only for a small change:** a typo, a broken link, a doc
 correction, formatting, or a one-line fix that doesn't change what an algorithm computes or what an

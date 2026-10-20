@@ -14,7 +14,6 @@ chosen (plan D4).
 ```bash
 gh repo clone Draganoider/COMP-482-Project
 cd COMP-482-Project
-git switch test
 python .github/scripts/check_links.py
 ```
 

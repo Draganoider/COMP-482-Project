@@ -19,9 +19,8 @@ git switch test && git pull
 git switch -c feature/short-name
 ```
 
-Commit, push, and open the pull request **into `test`**: `gh pr create --base test`. GitHub
-suggests `main` because it's the default branch; that's wrong for day-to-day work. Fill in the
-template honestly, including the *Contribution* section, with `Closes #N` only when the issue's
+Commit, push, and open the pull request **into `test`**, the default branch: `gh pr create`. Fill
+in the template honestly, including the *Contribution* section, with `Closes #N` only when the issue's
 whole checklist is done, or `Part of #N` otherwise.
 
 - One teammate reviews it before it merges, following [REVIEWING.md](REVIEWING.md).

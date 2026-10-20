@@ -32,8 +32,9 @@ and, for the shortcuts in the docs, the [GitHub CLI](https://cli.github.com/) (`
 ```bash
 gh repo clone Draganoider/COMP-482-Project
 cd COMP-482-Project
-git switch test
 ```
+
+You're on `test`, the default branch, where all work happens. `main` holds what we submitted.
 
 ## Running the experiments
 

@@ -1,5 +1,5 @@
 <!--
-Day-to-day work goes into `test`. Check the base branch above says `test`, not `main`.
+Day-to-day work goes into `test`, the default branch. `main` is only for submissions.
 Submitting a phase (test into main)? Use the submission template instead:
   gh pr create --base main --head test --template submission.md
 -->
