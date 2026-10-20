@@ -1,0 +1,147 @@
+name: CI
+
+# Runs on every pull request into test or main, and on pushes to them (small fixes may be committed
+# straight to test). `main` requires the "Hygiene checks" job to pass before a pull request merges.
+#
+# Only the repository hygiene checks exist so far: they need no toolchain and catch the mistakes
+# that happen before there is code. A "Tests" job (build, test suite, a quick run of each
+# experiment) is added when the language is chosen (docs/plan.md, D4); add it to main's required
+# checks at the same time.
+
+on:
+  push:
+    branches: [test, main]
+  pull_request:
+    branches: [test, main]
+    # "edited" so that fixing a pull request's description re-runs the attribution check.
+    types: [opened, synchronize, reopened, edited]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  hygiene:
+    name: Hygiene checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # the attribution check reads every commit in the push or pull request
+
+      - name: No secrets or generated files committed
+        run: |
+          fail=0
+          # git pathspecs: '*' also matches '/', so '*.pem' finds a key at any depth. A pattern
+          # with a '/' in front ('*/.env') misses the root, which is why .env is listed twice.
+          check() {
+            found=$(git ls-files -- "$1" | head -5) || true
+            if [ -n "$found" ]; then
+              echo "::error::$2"
+              echo "$found" | sed 's/^/    /'
+              fail=1
+            fi
+          }
+          check '.env'             'A .env file is committed. Rotate every value in it, then remove it from history.'
+          check '*/.env'           'A .env file is committed. Rotate every value in it, then remove it from history.'
+          check '*.pem'            'A private key or certificate is committed. Treat it as compromised.'
+          check '*id_rsa*'         'An SSH key is committed. Treat it as compromised.'
+          check '*id_ed25519*'     'An SSH key is committed. Treat it as compromised.'
+          check '.scratch/*'       '.scratch/ is personal and must never be committed.'
+          check 'data/raw/*'       'data/raw/ holds downloaded datasets and is not committed; a script fetches them.'
+          check '*__pycache__*'    'Python bytecode is committed.'
+          check '*.class'          'Compiled Java classes are committed.'
+          check 'node_modules/*'   'node_modules/ is committed.'
+          check '*/node_modules/*' 'node_modules/ is committed.'
+          [ "$fail" -eq 0 ] && echo "OK: no secrets or generated files tracked"
+          exit $fail
+
+      - name: No large files committed
+        run: |
+          # Report PDFs, plots and small datasets stay well under 2 MB. Anything bigger is almost
+          # always a raw dataset or a build, which belongs in data/raw/ or a GitHub Release.
+          big=$(git ls-files -z | xargs -0 -r du -k 2>/dev/null | awk '$1 > 2048 {print $2 " (" $1 " KB)"}')
+          if [ -n "$big" ]; then
+            echo "::error::Files over 2 MB are committed:"
+            echo "$big" | sed 's/^/    /'
+            exit 1
+          fi
+          echo "OK: no tracked file is over 2 MB"
+
+      - name: JSON files parse
+        run: |
+          fail=0
+          while IFS= read -r f; do
+            [ -z "$f" ] && continue
+            if ! python3 -c "import json,sys; json.load(open(sys.argv[1],encoding='utf-8'))" "$f" 2>/dev/null; then
+              echo "::error file=$f::Invalid JSON."
+              fail=1
+            fi
+          done < <(git ls-files '*.json')
+          [ "$fail" -eq 0 ] && echo "OK: every tracked JSON file parses"
+          exit $fail
+
+      - name: Links between docs resolve
+        run: python3 .github/scripts/check_links.py
+
+      - name: No AI attribution lines in commits or the description
+        env:
+          EVENT: ${{ github.event_name }}
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD: ${{ github.event.pull_request.head.sha }}
+          PUSH_BEFORE: ${{ github.event.before }}
+          PUSH_AFTER: ${{ github.sha }}
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: |
+          # AGENTS.md hard rule 5: no Co-Authored-By naming an AI tool, no "Generated with <tool>".
+          # A Co-authored-by for a teammate passes. Claude Code's shared settings strip these lines
+          # already; other agents follow the rule by convention. The description arrives through
+          # env, never pasted into the script, so it cannot inject shell or Python.
+          python3 - <<'PY'
+          import os, re, subprocess, sys
+
+          sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+
+          def is_commit(ref):
+              return bool(ref) and subprocess.run(["git", "cat-file", "-e", ref + "^{commit}"],
+                                                  capture_output=True).returncode == 0
+
+          if os.environ["EVENT"] == "pull_request":
+              rev_range = f"{os.environ['PR_BASE']}..{os.environ['PR_HEAD']}"
+          else:
+              before, after = os.environ.get("PUSH_BEFORE", ""), os.environ["PUSH_AFTER"]
+              if before.strip("0") and is_commit(before):
+                  rev_range = f"{before}..{after}"
+              elif is_commit("origin/main") and subprocess.run(
+                      ["git", "rev-parse", "origin/main"], capture_output=True, text=True).stdout.strip() != after:
+                  rev_range = f"origin/main..{after}"
+              else:
+                  rev_range = after
+          print(f"Checking {rev_range}")
+
+          tools = r"(?:claude|codex|copilot|cursor|chatgpt|gpt|gemini|aider|windsurf|devin|openai|anthropic)"
+          lines = re.compile(
+              r"^\s*(?:co-authored-by\s*:[^\n]*\b" + tools + r"\b[^\n]*"
+              r"|\W{0,3}\s*generated\s+(?:with|by)\s+\[?" + tools + r"\b[^\n]*)",
+              re.I | re.M)
+          errors = []
+          log = subprocess.run(["git", "log", "--format=%h%x00%B%x01", rev_range],
+                               capture_output=True, text=True, encoding="utf-8",
+                               errors="replace", check=True).stdout
+          commits = [c.strip("\n") for c in log.split("\x01") if c.strip()]
+          for c in commits:
+              sha, _, body = c.partition("\x00")
+              for m in lines.finditer(body):
+                  errors.append(f"::error::Commit {sha} carries an AI attribution line: \"{m.group(0).strip()}\". "
+                                f"AGENTS.md hard rule 5. Reword the commit and push again.")
+          for m in lines.finditer(os.environ.get("PR_BODY") or ""):
+              errors.append(f"::error::The pull request description carries an AI attribution line: \"{m.group(0).strip()}\". "
+                            f"AGENTS.md hard rule 5. Edit it out of the description, then re-run this check.")
+          print("\n".join(errors) if errors else f"OK: {len(commits)} commits and the description carry no AI attribution lines")
+          sys.exit(1 if errors else 0)
+          PY

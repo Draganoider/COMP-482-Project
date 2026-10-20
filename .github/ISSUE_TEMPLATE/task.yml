@@ -1,0 +1,84 @@
+name: Task
+description: A piece of work to do, in code, analysis, experiments or writing
+title: "Short imperative title: what will exist when this is done"
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Someone should be able to read the first field and decide whether to take it, without
+        reading the rest.
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Algorithm implementation
+        - Correctness proof or runtime analysis
+        - Experiment or benchmark
+        - Dataset or input generator
+        - Report or slides
+        - Repository and tooling
+    validations:
+      required: true
+
+  - type: textarea
+    id: plain
+    attributes:
+      label: In plain terms
+      description: >
+        Two or three sentences, no jargon. What is this, which part of the project does it serve,
+        and what does finished look like? Write it for a teammate who hasn't read the plan.
+      placeholder: |
+        Dijkstra's algorithm with a binary-heap priority queue, for the heap-vs-array comparison.
+
+        Done looks like: it agrees with Bellman-Ford on 1,000 random graphs, and counts its heap operations.
+    validations:
+      required: true
+
+  - type: textarea
+    id: scope
+    attributes:
+      label: What to do
+      description: >
+        Specific enough that two people would do the same thing. Link the proposal or report
+        section it implements, and say which algorithm, data structure or experiment.
+    validations:
+      required: true
+
+  - type: textarea
+    id: files
+    attributes:
+      label: Files you own
+      description: >
+        The files this issue changes. Stick to the list: it's how five people work at once without
+        merge conflicts. Shared files (the README's experiment table, shared data structures) need
+        a note saying what you'll touch.
+      placeholder: |
+        - src/shortest_paths/dijkstra_heap.*
+        - tests/test_dijkstra.*
+    validations:
+      required: true
+
+  - type: textarea
+    id: dod
+    attributes:
+      label: Definition of done
+      description: Checkboxes. Tests belong here, not in a separate issue.
+      value: |
+        - [ ]
+        - [ ] Cross-checked against brute force or a reference on small random inputs (for an algorithm)
+        - [ ] Runs with one command from the README, result recorded in findings.md (for an experiment)
+        - [ ] CHANGELOG line with your handle; docs updated
+    validations:
+      required: true
+
+  - type: input
+    id: deps
+    attributes:
+      label: Dependencies
+      description: What blocks this, and what it blocks. Write "none, ready to start" if nothing.
+      placeholder: "Blocked by #4. Blocks #10."
+    validations:
+      required: true

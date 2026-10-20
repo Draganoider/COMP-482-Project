@@ -1,0 +1,46 @@
+name: Assignment question
+description: Something in the project outline is unclear, or we need the instructor's answer
+title: "Question: "
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        For questions about **what the course asks for**, not how to code something. Also add the
+        question to the open questions in
+        [docs/plan.md](https://github.com/Draganoider/COMP-482-Project/blob/test/docs/plan.md#open-questions),
+        so whoever asks the instructor has the full list in one place. Close this issue once the
+        answer is recorded there.
+
+  - type: textarea
+    id: quote
+    attributes:
+      label: What the outline says
+      description: >
+        Name the section and quote the relevant words from the PDF on Canvas. If two places
+        disagree, quote both.
+    validations:
+      required: true
+
+  - type: textarea
+    id: unclear
+    attributes:
+      label: What's unclear
+    validations:
+      required: true
+
+  - type: textarea
+    id: options
+    attributes:
+      label: The readings, and what each would change
+      description: Which algorithms, experiments or report sections come out differently under each reading?
+    validations:
+      required: true
+
+  - type: input
+    id: until
+    attributes:
+      label: What we do until it's answered
+      description: The working assumption, so nobody is blocked. Keep it easy to change.
+    validations:
+      required: false

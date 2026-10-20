@@ -1,0 +1,71 @@
+name: Bug
+description: Something gives a wrong answer, crashes, or can't be reproduced
+title: "Bug: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **A wrong answer is the most serious bug this project can have**: it undermines every
+        result built on it. If an algorithm disagrees with the brute force or another algorithm,
+        say so in the title, and include the smallest input you found that shows it.
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What kind
+      options:
+        - Wrong answer
+        - Crash or error
+        - Too slow, or slower than the analysis predicts
+        - An experiment doesn't reproduce its recorded result
+        - Setup, CI or tooling
+        - Docs
+    validations:
+      required: true
+
+  - type: textarea
+    id: what
+    attributes:
+      label: What happens, and what should happen
+      description: What you observed, not what you think causes it.
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: >
+        The exact command, and the input: the generator and seed, or the smallest input that shows
+        it, pasted here. If it only happens sometimes, say so.
+      value: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+
+  - type: input
+    id: commit
+    attributes:
+      label: Branch or commit
+      placeholder: "test @ c3892ea"
+    validations:
+      required: true
+
+  - type: textarea
+    id: output
+    attributes:
+      label: Error output
+      render: text
+    validations:
+      required: false
+
+  - type: input
+    id: env
+    attributes:
+      label: Environment
+      placeholder: "Windows 11, <language and version>"
+    validations:
+      required: false

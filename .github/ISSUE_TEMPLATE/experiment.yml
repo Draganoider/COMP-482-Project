@@ -1,0 +1,87 @@
+name: Experiment result
+description: The numbers from an experiment run, with the conditions they were measured under
+title: "Result: <experiment> on <machine>, <date>"
+labels: ["experiment"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **A number without its conditions isn't a result.** This form asks for them because timings
+        change with the machine, the sizes, the seed and the commit. Unexpected and negative results
+        are the most useful ones: a result that contradicts the analysis is a finding for the
+        report, not a failure.
+
+        File this the day you run it, then copy it into `docs/llm-wiki/findings.md`.
+
+  - type: input
+    id: hypothesis
+    attributes:
+      label: Hypothesis
+      description: Which hypothesis from findings.md (H1, H2...), or what you set out to learn.
+      placeholder: "H2: Prim with a binary heap beats Kruskal on dense graphs"
+    validations:
+      required: true
+
+  - type: input
+    id: command
+    attributes:
+      label: Command
+      description: The exact command from the README, with its arguments.
+    validations:
+      required: true
+
+  - type: input
+    id: commit
+    attributes:
+      label: Commit
+      placeholder: "test @ c3892ea"
+    validations:
+      required: true
+
+  - type: input
+    id: machine
+    attributes:
+      label: Machine
+      description: CPU, RAM, OS, language version. Plugged in, with nothing heavy running?
+      placeholder: "Ryzen 7 5800H, 16 GB, Windows 11, <language version>, plugged in"
+    validations:
+      required: true
+
+  - type: textarea
+    id: inputs
+    attributes:
+      label: Inputs
+      description: Generator or dataset, the sizes, the seed(s), and the repetitions per size.
+      placeholder: "Random graphs, density 0.5, V = 500 to 8,000 doubling, seeds 1-3, 7 repetitions, median reported"
+    validations:
+      required: true
+
+  - type: textarea
+    id: results
+    attributes:
+      label: Results
+      description: The table from results/, and the path of the plot. Paste numbers, never estimate them.
+      value: |
+        | n | Algorithm A (median ms) | Algorithm B (median ms) | Ops A | Ops B |
+        |---|---|---|---|---|
+        | | | | | |
+
+        Plot: `results/...`
+    validations:
+      required: true
+
+  - type: textarea
+    id: belief
+    attributes:
+      label: What it shows
+      description: Does it confirm the hypothesis? Where does it not, and why might that be?
+    validations:
+      required: true
+
+  - type: textarea
+    id: caveats
+    attributes:
+      label: Caveats
+      description: Anything that limits the result (small sizes, noisy machine, one seed).
+    validations:
+      required: false

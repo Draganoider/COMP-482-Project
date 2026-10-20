@@ -1,0 +1,70 @@
+# =============================================================================
+# COMP 482 project — Git ignore
+#
+# Written before the language is chosen, on purpose: build tools generate large
+# folders the moment they first run, and one `git add -A` without these rules
+# puts them in history. Covers the likely languages; trim it once one is chosen.
+# Patterns without a leading slash match at any depth.
+# =============================================================================
+
+# --- Secrets -----------------------------------------------------------------
+.env
+.env.*
+!.env.example
+*.pem
+
+# --- Data and results --------------------------------------------------------
+# Large datasets are downloaded by a script into data/raw/, never committed.
+# results/ IS committed: the report's tables and plots are evidence.
+data/raw/
+results/tmp/
+
+# --- Python ------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+*.egg-info/
+
+# --- Java --------------------------------------------------------------------
+*.class
+target/
+.gradle/
+build/
+out/
+
+# --- C / C++ -----------------------------------------------------------------
+*.o
+*.obj
+*.exe
+*.out
+cmake-build-*/
+
+# --- IDE and editor files ----------------------------------------------------
+.idea/
+*.iml
+.vscode/
+.vs/
+*.swp
+*~
+
+# --- OS files ----------------------------------------------------------------
+.DS_Store
+._*
+Thumbs.db
+Desktop.ini
+
+# --- Claude Code -------------------------------------------------------------
+# .claude/settings.json is committed. Personal overrides are not.
+.claude/settings.local.json
+.claude/worktrees/
+
+# --- Local scratch -----------------------------------------------------------
+# Throwaway scripts, notes and outputs. Anything worth keeping moves into the
+# repository proper (results go in docs/llm-wiki/findings.md).
+/.scratch/
+*.local
