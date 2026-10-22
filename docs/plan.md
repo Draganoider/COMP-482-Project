@@ -55,5 +55,5 @@ old one instead of editing it.
 | Q3 | The three due dates | Project Lead, from Canvas | |
 | Q4 | Does the course's AI policy accept our *AI usage* disclosure, or does it ask for more (per-assignment statements, logs)? | Project Lead, instructor | |
 | Q5 | Is a public repository acceptable for this course while the semester runs? | Project Lead, instructor | |
-| Q6 | Which textbook and pseudocode style does the course expect (likely Kleinberg and Tardos, *Algorithm Design*)? | Algorithms Lead | |
+| Q6 | Which textbook and pseudocode style does the course expect? | Algorithms Lead | **Answered 2026-10-22** from the lecture slides: Kleinberg and Tardos (main), Cormen et al. (second). Style in [course-conventions.md](llm-wiki/course-conventions.md) |
 | Q7 | Are slides or a presentation required, or optional? | Project Lead, instructor | |

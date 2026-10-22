@@ -24,6 +24,9 @@ How it's kept (see [AGENTS.md](AGENTS.md#working-conventions)):
 
 ### Added
 
+- **docs:** the course's textbooks, syllabus order and proof style, checked against the lecture
+  slides, in `course-conventions.md` and `references.md` (plan Q6 answered). Network flow is taught
+  last, so a flow-based project learns it from the textbook first. @Draganoider
 - **repo:** the repository and its conventions: `AGENTS.md` as the single rule file for people and
   AI agents, contributing and reviewing guides, pull request and issue templates, CI hygiene checks,
   `main` protected with `test` as the working branch, shared Claude Code settings and commands.

@@ -11,7 +11,8 @@ and how to get it, so the download script and this page agree.
 
 | Source | Used for |
 |---|---|
-| *To be confirmed* (see [plan.md](plan.md#open-questions), Q6) | |
+| Kleinberg, J. and Tardos, É. *Algorithm Design*. Pearson | The course's main textbook: notation, proof forms |
+| Cormen, T. H. et al. *Introduction to Algorithms*. MIT Press | The course's second textbook |
 
 ## Datasets
 
