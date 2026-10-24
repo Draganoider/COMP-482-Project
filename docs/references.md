@@ -28,3 +28,6 @@ and how to get it, so the download script and this page agree.
 
 | Library or snippet | Version | Licence | Used for |
 |---|---|---|---|
+| [pytest](https://pytest.org/) | ≥ 8 | MIT | Running the test suite (development only) |
+| [Ruff](https://docs.astral.sh/ruff/) | ≥ 0.6 | MIT | Style and lint checks (development only) |
+| [NetworkX](https://networkx.org/) | ≥ 3.2 | BSD-3-Clause | Reference max flow in tests, to check our own implementations. Never used in `src/` |

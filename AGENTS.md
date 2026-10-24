@@ -55,43 +55,61 @@ Worth 25% of the course grade.
 
 ## Current state
 
-**20 October 2026: Phase 1 (team formation).** The repository and its conventions are set up. **The
-topic and the language are not chosen yet**; the team decides them together for the proposal.
-[docs/proposal/topic-comparison.md](docs/proposal/topic-comparison.md) compares the outline's ideas
-from the implementation side. No code exists yet, so CI runs only the repository hygiene checks.
+**23 October 2026: Phase 2 (proposal) is next.** The team chose **topic 6, the Wildfire Evacuation
+Planner**, and **Python**, and agreed the roles ([docs/plan.md](docs/plan.md#team-and-roles)). The
+project is built in three layers, and **layer 1, the outline's baseline, is the main deliverable**:
+max flow for the cars per hour a Los Angeles road network can move to shelters, min cut for the
+bottleneck roads, then the closure and widening what-ifs. The fire extension (layer 2) and the map
+app (layer 3) come after it; [docs/plan.md](docs/plan.md#scope) has the scope. The folders and the
+Python tooling are set up; no algorithm code exists yet.
 
-Update this paragraph when a phase starts or finishes, or the topic or language is decided.
+Update this paragraph when a phase starts or finishes, or a layer is finished.
 
 ## Stack
 
 | Piece | Choice |
 |---|---|
-| Language | **Not decided** (see [docs/plan.md](docs/plan.md#open-questions)) |
-| Tests | Decided with the language |
-| Plots | Decided with the language |
-| CI | GitHub Actions: [.github/workflows/ci.yml](.github/workflows/ci.yml) |
+| Language | Python 3.11 or newer (3.12 in CI) |
+| Package | `evac`, in `src/evac/`, installed in editable mode |
+| Tests and style | pytest, ruff (settings in [pyproject.toml](pyproject.toml)) |
+| Reference in tests only | NetworkX: our max flow must give the same value. **Never imported in `src/`** (hard rule 3) |
+| Road data | OSMnx, added with the data issue |
+| Plots | matplotlib, added with the first experiment |
+| App (layer 3) | FastAPI, MapLibre, deck.gl; decided in detail when layer 3 starts |
+| CI | GitHub Actions: [.github/workflows/ci.yml](.github/workflows/ci.yml), hygiene checks plus ruff and pytest |
 
-When the language is chosen, fill in this table, *Repo layout*, *Getting set up*, the CI test job,
-`.gitignore`, `/check` in [.claude/commands/](.claude/commands/), and the README's commands.
+A new dependency goes in `pyproject.toml` in the pull request that first uses it, with a line in
+[docs/references.md](docs/references.md).
+
+## Getting set up
+
+```bash
+python -m venv .venv
+.venv\Scripts\Activate.ps1          # macOS/Linux: source .venv/bin/activate
+pip install -e ".[dev]"
+pytest
+ruff check .
+```
 
 ## Repo layout
 
-| Path | Contents |
-|---|---|
-| `docs/` | The plan, the assignment summary, the llm-wiki, the proposal and report drafts. [docs/README.md](docs/README.md) maps them |
-| `.github/` | CI, the pull request templates, the issue forms and the link checker |
-| `.claude/` | Claude Code settings and slash commands, shared by the team |
-| `.scratch/` | Your own throwaway files. Gitignored; nothing in it is ever committed |
+Folders follow what we hand in (plan D9): every number in the report comes from an experiment in
+`experiments/`, lands in `results/`, and appears in `report/`.
 
-Planned once the language is chosen (rename to the language's conventions):
-
-| Path | Contents |
-|---|---|
-| `src/` | The algorithms, one module per algorithm, plus the data structures they share |
-| `tests/` | Correctness tests, including the brute-force cross-checks |
-| `experiments/` | One entry point per experiment, each runnable with one command |
-| `results/` | What the experiments write: CSV tables and plots. The ones the report uses are committed |
-| `data/` | Small datasets, committed, with their source in `docs/references.md`. Large ones go in `data/raw/`, gitignored and downloaded by a script |
+| Path | Contents | Owner |
+|---|---|---|
+| `analysis/` | Problem statement, pseudocode, correctness proofs, runtime analysis | Algorithms |
+| `src/evac/` | The algorithms, one module per algorithm, plus the graph and data structures they share | Implementation |
+| `tests/` | Correctness tests, including the brute-force cross-checks | Implementation |
+| `experiments/` | One script per experiment (E1–E5), each runnable with one command | Experiments |
+| `results/` | What the experiments write: CSV tables and plots. The ones the report uses are committed | Experiments |
+| `data/` | Small datasets, committed, with their source in `docs/references.md`. Large downloads go in `data/raw/`, gitignored and fetched by a script | Experiments |
+| `report/` | The proposal and the final report: outlines, figures, submitted PDFs | Report and Presentation |
+| `app/` | The map app (layer 3). Displays results only; built last | Implementation |
+| `docs/` | How we work: the plan, the assignment summary, the llm-wiki, references. [docs/README.md](docs/README.md) maps them | Everyone |
+| `.github/` | CI, the pull request templates, the issue forms and the link checker | Implementation |
+| `.claude/` | Claude Code settings and slash commands, shared by the team | Implementation |
+| `.scratch/` | Your own throwaway files. Gitignored; nothing in it is ever committed | |
 
 ## Branching and pull requests
 

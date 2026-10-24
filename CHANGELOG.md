@@ -19,11 +19,20 @@ How it's kept (see [AGENTS.md](AGENTS.md#working-conventions)):
 
 ### Changed
 
+- **docs:** the proposal and report checklists moved from `docs/` to `report/`; the topic
+  comparison is now a dated snapshot in `docs/research/`. @Draganoider
 - **repo:** `test` is now the default branch, so `Closes #N` closes issues on merge into `test` and
   new pull requests target it; `main` stays protected as the release branch (plan D5). @Draganoider
 
 ### Added
 
+- **repo:** the folders for each deliverable (`analysis/`, `src/evac/`, `tests/`, `experiments/`,
+  `results/`, `data/`, `report/`, `app/`), each with a README saying what goes in it and who owns
+  it; the Python package with `pyproject.toml`, pytest and ruff; a CI job that runs both; a test
+  that fails if `src/` ever imports NetworkX. @Draganoider
+- **docs:** the team's decisions (topic 6, three layers with the outline's baseline as the main
+  deliverable, Python), the roles, the scope and experiments E1–E5 in `docs/plan.md`, and their
+  hypotheses in `findings.md`. @Draganoider
 - **docs:** the course's textbooks, syllabus order and proof style, checked against the lecture
   slides, in `course-conventions.md` and `references.md` (plan Q6 answered). Network flow is taught
   last, so a flow-based project learns it from the textbook first. @Draganoider
