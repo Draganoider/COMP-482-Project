@@ -41,7 +41,8 @@ Worth 25% of the course grade.
    runtime analysis no longer describes the code.
 4. **`main` changes only through a reviewed pull request from `test`.** GitHub enforces it. Work
    reaches `test` through a pull request with one teammate's review; a direct commit to `test` is
-   allowed only for a small change (see [Branching](#branching-and-pull-requests)).
+   allowed only for a small change (see [Branching](#branching-and-pull-requests)). The repository
+   owner (@Draganoider) may commit and merge into `test` without a teammate's review (plan D10).
 5. **No AI attribution lines in commits or pull requests:** no `Co-Authored-By` naming a tool, no
    "Generated with" lines. AI use is disclosed once, in the README's
    [AI usage](README.md#ai-usage) section, instead. `Co-authored-by` a **teammate** is fine and

@@ -29,7 +29,8 @@ push, and open the pull request **into `test`**, the default branch: `gh pr crea
 template honestly, including the *Contribution* section, with `Closes #N` only when the issue's
 whole checklist is done, or `Part of #N` otherwise.
 
-- One teammate reviews it before it merges, following [REVIEWING.md](REVIEWING.md).
+- One teammate reviews it before it merges, following [REVIEWING.md](REVIEWING.md). The
+  repository owner, @Draganoider, may merge their own work into `test` without one (plan D10).
 - **Small fixes** (a typo, a broken link, a doc correction, a one-liner that doesn't change what an
   algorithm computes or an experiment measures) may be committed straight to `test`.
 - `main` is protected: only a reviewed pull request from `test` gets in, when we submit a phase.

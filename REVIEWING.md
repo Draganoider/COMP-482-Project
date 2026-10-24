@@ -2,8 +2,9 @@
 
 For everyone who reviews here, teammates and AI assistants alike. [AGENTS.md](AGENTS.md) and the
 pull request template are the author's side of a pull request; this is the reviewer's. Every pull
-request into `test` gets one teammate's review before it merges. Pull requests into `main` need an
-approval too, and GitHub enforces that one.
+request into `test` gets one teammate's review before it merges, except the repository owner's,
+which may merge without one (plan D10). Pull requests into `main` need an approval too, and GitHub
+enforces that one.
 
 A review answers two questions. For the author: **what has to change before this merges, and
 why?** For the team: **what did the reviewer actually check?** CI answers neither. A green check

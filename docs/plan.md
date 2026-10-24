@@ -67,6 +67,7 @@ old one instead of editing it.
 
 | # | Date | Decision | Why |
 |---|---|---|---|
+| D10 | 2026-10-24 | The repository owner (@Draganoider) may commit and merge into `test` without a teammate's review. Everyone else's work still gets one. `main` is unchanged: a pull request from `test` with an approval | Repository and tooling work shouldn't wait on teammates who are still getting set up. `test` isn't what we submit, and `main` keeps its protection |
 | D9 | 2026-10-23 | Folders by deliverable: `analysis/`, `src/`, `tests/`, `experiments/`, `results/`, `data/`, `report/`, `app/`, with `docs/` for how we work | Most of the grade is the report and its evidence, so the writing and the results get first-class places beside the code, and every number traces from `experiments/` to `results/` to `report/` |
 | D8 | 2026-10-23 | Python for all the code: 3.11 or newer, pytest, ruff. NetworkX only as a reference in tests, never in `src/` | The team agreed. Python's data and plotting libraries (OSMnx, matplotlib) fit the problem; the graded algorithms must be our own (AGENTS.md hard rule 3) |
 | D7 | 2026-10-23 | Three layers, with the outline's baseline as the main deliverable (see *Scope*). Destinations are shelters | The baseline is what the outline grades; the fire and the app add to it without putting it at risk |
