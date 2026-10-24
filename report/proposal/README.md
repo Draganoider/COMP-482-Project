@@ -4,6 +4,7 @@
 team writes together (Google Docs, Overleaf); link it here once it exists, and commit the submitted
 PDF to this folder.
 
+- **Skeleton:** [skeleton.md](skeleton.md): sections, owners, lengths and the agreed points
 - **Draft:** *link here*
 - **Submitted PDF:** *added when submitted*
 
