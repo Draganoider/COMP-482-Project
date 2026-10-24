@@ -12,9 +12,18 @@ DYNAMIC_IMPORTERS = {"import_module", "__import__"}
 
 
 def networkx_imports(source, filename="<source>"):
-    """Line numbers where `source` imports NetworkX, statically or by a literal dynamic import."""
+    """Line numbers where `source` imports NetworkX, statically or by a literal dynamic import.
+
+    Dynamic imports are caught when the module name is a string literal, passed by position or as
+    `name=`, including through an alias (`from importlib import import_module as load`).
+    """
+    tree = ast.parse(source, filename=filename)
+    importers = set(DYNAMIC_IMPORTERS)
+    for node in ast.walk(tree):
+        if isinstance(node, ast.ImportFrom) and node.module == "importlib":
+            importers |= {a.asname for a in node.names if a.name == "import_module" and a.asname}
     lines = []
-    for node in ast.walk(ast.parse(source, filename=filename)):
+    for node in ast.walk(tree):
         if isinstance(node, ast.Import):
             names = [alias.name for alias in node.names]
         elif isinstance(node, ast.ImportFrom):
@@ -22,9 +31,9 @@ def networkx_imports(source, filename="<source>"):
         elif isinstance(node, ast.Call):
             func = node.func
             called = func.attr if isinstance(func, ast.Attribute) else getattr(func, "id", "")
-            first = node.args[0] if node.args else None
-            literal = isinstance(first, ast.Constant) and isinstance(first.value, str)
-            names = [first.value] if called in DYNAMIC_IMPORTERS and literal else []
+            args = node.args[:1] + [k.value for k in node.keywords if k.arg == "name"]
+            literals = [a.value for a in args if isinstance(a, ast.Constant)]
+            names = [v for v in literals if isinstance(v, str)] if called in importers else []
         else:
             continue
         if any(name.split(".")[0] == "networkx" for name in names):
@@ -55,6 +64,8 @@ def test_src_never_imports_networkx():
         "import importlib\nimportlib.import_module('networkx')",
         "from importlib import import_module\nimport_module('networkx.algorithms.flow')",
         "__import__('networkx')",
+        "import importlib\nimportlib.import_module(name='networkx')",
+        "from importlib import import_module as load\nload('networkx')",
     ],
 )
 def test_guard_catches_networkx_imports(source):
