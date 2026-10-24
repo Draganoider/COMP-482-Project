@@ -19,6 +19,8 @@ How it's kept (see [AGENTS.md](AGENTS.md#working-conventions)):
 
 ### Changed
 
+- **repo:** pull requests merge with a merge commit, so each branch stays visible in the history;
+  squash and rebase merging are off. @Draganoider
 - **docs:** the proposal and report checklists moved from `docs/` to `report/`; the topic
   comparison is now a dated snapshot in `docs/research/`. @Draganoider
 - **repo:** `test` is now the default branch, so `Closes #N` closes issues on merge into `test` and

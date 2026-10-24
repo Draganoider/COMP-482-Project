@@ -135,10 +135,14 @@ correction, formatting, or a one-line fix that doesn't change what an algorithm 
 experiment measures. Anything else, and anything you're unsure about, goes through a pull request.
 A direct commit still needs CI green and a changelog line if it's notable.
 
-Merging:
-- **Into `test`: squash and merge**, with a message that says what and why.
-- **`test` into `main`: create a merge commit**, never squash, or the branches drift apart. Use the
-  submission template: `gh pr create --base main --head test --template submission.md`.
+**Merging.** Every merge is a **merge commit**, so each branch stays visible in the history.
+Squash and rebase merging are turned off for the repository.
+
+- **Into `test`:** the branch's commits arrive as they are, so keep them tidy: each one says what
+  and why.
+- **`test` into `main`:** a merge commit too; squashing would give `main` commits `test` doesn't
+  have, and the branches would drift apart. Use the submission template:
+  `gh pr create --base main --head test --template submission.md`.
 
 ## Working conventions
 
