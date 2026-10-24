@@ -14,12 +14,12 @@ someone who didn't write it.
 
 | Section | Owner | Written from |
 |---|---|---|
-| Title page | | [../plan.md](../plan.md#team-and-roles) |
+| Title page | | [../plan.md](../../docs/plan.md#team-and-roles) |
 | Project contributions | | [../../CHANGELOG.md](../../CHANGELOG.md) (every line names its author), the pull requests' *Contribution* sections, `git shortlog -sn` |
 | Introduction | | The proposal |
 | Algorithm design / methodology | Algorithms Lead | Pseudocode and proofs; the code, which must match it (AGENTS.md hard rule 3) |
-| Results and discussion | Experiments Lead | [../llm-wiki/findings.md](../llm-wiki/findings.md) only: every number and plot traces to an entry there and a file in `results/` |
-| References | | [../references.md](../references.md) |
+| Results and discussion | Experiments Lead | [../llm-wiki/findings.md](../../docs/llm-wiki/findings.md) only: every number and plot traces to an entry there and a file in `results/` |
+| References | | [../references.md](../../docs/references.md) |
 
 ## Before submitting
 

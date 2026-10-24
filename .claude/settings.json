@@ -20,7 +20,11 @@
       "Bash(gh issue view:*)",
       "Bash(gh issue list:*)",
       "Bash(gh run list:*)",
-      "Bash(gh run view:*)"
+      "Bash(gh run view:*)",
+      "Bash(pytest:*)",
+      "Bash(python -m pytest:*)",
+      "Bash(ruff check:*)",
+      "Bash(python -m ruff:*)"
     ],
     "deny": [
       "Read(./.env)",

@@ -30,7 +30,7 @@ Code alone isn't enough: **the analysis and the evidence carry most of the grade
 ## Proposal
 
 One 2–3 page PDF per team: title, problem statement, proposed methods and algorithms, data,
-evaluation plan, and so on. Checklist in [../proposal/README.md](../proposal/README.md).
+evaluation plan, and so on. Checklist in [report/proposal/](../../report/proposal/README.md).
 
 ## Final report
 
@@ -46,7 +46,7 @@ One 8–12 page PDF per team, with the repository link and slides if any. Recomm
    strengths and limitations.
 6. **References:** textbooks, datasets, articles, and any external code used.
 
-Section owners and evidence sources: [../report/README.md](../report/README.md).
+Section owners and evidence sources: [report/final/](../../report/final/README.md).
 
 ## Roles (suggested, not required)
 
@@ -69,4 +69,4 @@ Teams are encouraged to propose their own. The outline's starting points:
 | 7 | Our own idea | Any 2+ course concepts on a real problem, at the same bar, compared with brute force |
 
 Each idea has a baseline goal and a stretch goal; both are summarised, with the implementation
-effort, in [../proposal/topic-comparison.md](../proposal/topic-comparison.md).
+effort, in [the topic comparison](../research/2026-10-20-topic-comparison.md).

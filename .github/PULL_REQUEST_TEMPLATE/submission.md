@@ -20,7 +20,7 @@ Phase: <!-- proposal / final -->
 - [ ] CI is green on the latest `test` commit
 - [ ] `CHANGELOG.md`: *Unreleased* renamed to `[<phase>] — YYYY-MM-DD`, with a new empty *Unreleased* above it
 - [ ] `AGENTS.md` *Current state* and `docs/plan.md` status are up to date
-- [ ] The submitted PDF (and slides, if any) are committed in `docs/proposal/` or `docs/report/`
+- [ ] The submitted PDF (and slides, if any) are committed in `report/proposal/` or `report/final/`
 
 ### Final report only
 

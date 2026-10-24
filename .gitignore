@@ -1,9 +1,9 @@
 # =============================================================================
 # COMP 482 project — Git ignore
 #
-# Written before the language is chosen, on purpose: build tools generate large
-# folders the moment they first run, and one `git add -A` without these rules
-# puts them in history. Covers the likely languages; trim it once one is chosen.
+# Python project (docs/plan.md, D8). Build tools generate large folders the
+# moment they first run; one `git add -A` without these rules puts them in
+# history.
 # Patterns without a leading slash match at any depth.
 # =============================================================================
 
@@ -29,20 +29,10 @@ venv/
 .mypy_cache/
 .ipynb_checkpoints/
 *.egg-info/
-
-# --- Java --------------------------------------------------------------------
-*.class
-target/
-.gradle/
 build/
-out/
-
-# --- C / C++ -----------------------------------------------------------------
-*.o
-*.obj
-*.exe
-*.out
-cmake-build-*/
+dist/
+.coverage
+htmlcov/
 
 # --- IDE and editor files ----------------------------------------------------
 .idea/

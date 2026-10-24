@@ -16,7 +16,11 @@ evaluation plan. Whoever answers one moves it into a dated entry under Results.
 
 | # | Hypothesis (from the analysis) | Experiment | Status |
 |---|---|---|---|
-| H1 | | | |
+| H1 | Edmonds-Karp's augmenting-path count stays within its O(VE) bound and its time within O(VE²); Ford-Fulkerson's depends on the flow value, so it can win when flows are small | E1 | Open |
+| H2 | Closing a road lowers the max flow only if the road lies on some minimum cut | E2 | Open |
+| H3 | Widening a min-cut road is not always the best single road to widen: with several minimum cuts it may change nothing, which brute force will show | E3 | Open |
+| H4 | With no fire, the time-expanded result approaches layer 1's rate × time as the window grows; road closures and a later evacuation order push it lower | E4 | Open |
+| H5 | The max-flow plan never gets fewer cars out than everyone taking their shortest route, and the gap is largest when one shelter is nearest to most households | E5 | Open |
 
 ---
 
