@@ -35,6 +35,9 @@ What is still to do is in the issue tracker and the [plan](docs/plan.md#status),
 
 ### Added
 
+- **report:** a proposal skeleton in `report/proposal/skeleton.md`: each section with its owner,
+  length and the points already agreed, for the Report and Presentation Lead to hand out.
+  @Draganoider
 - **repo:** the folders for each deliverable (`analysis/`, `src/evac/`, `tests/`, `experiments/`,
   `results/`, `data/`, `report/`, `app/`), each with a README saying what goes in it and who owns
   it; the Python package with `pyproject.toml`, pytest and ruff; a CI job that runs both; a test
