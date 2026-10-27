@@ -1,7 +1,6 @@
 # Environment
 
-Setting up a machine to work on the project. Language-specific steps are added once the language is
-chosen (plan D4).
+Setting up a machine to work on the project, in Python (plan D8).
 
 ## Everyone
 

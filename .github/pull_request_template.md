@@ -43,6 +43,8 @@ Closes #<!-- number -->
 ## Docs
 
 - [ ] `docs/plan.md`, `AGENTS.md` (*Current state*) and the llm-wiki updated if this makes them untrue
+- [ ] Any measurement or surprising fact recorded in `docs/llm-wiki/findings.md`, negative results included
+- [ ] If this needs no changelog line, wiki update or finding, the reason is under *Notes for the reviewer*
 
 ## Notes for the reviewer
 

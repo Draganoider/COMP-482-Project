@@ -24,6 +24,16 @@ Worth 25% of the course grade.
    [course-conventions.md](docs/llm-wiki/course-conventions.md). Results so far are in
    [findings.md](docs/llm-wiki/findings.md).
 
+## Where knowledge lives
+
+| What | Where | Write to it when |
+|---|---|---|
+| Phases, scope, roles, decisions and open questions | [docs/plan.md](docs/plan.md) | A phase starts or ends, a decision would cost more than an hour to reverse, a question is answered |
+| What changed | [CHANGELOG.md](CHANGELOG.md) | In the pull request that makes the change, under `[Unreleased]` |
+| How things work, setup, and what was measured or learned | [docs/llm-wiki/](docs/llm-wiki/README.md) | The day you measure something, in [findings.md](docs/llm-wiki/findings.md), negative results included; a reference page in the pull request that changes what it describes |
+
+None of these is loaded into every session the way this file is; read the one you need.
+
 ## Hard rules
 
 1. **No claim without evidence.** The grade is mostly analysis and evidence, not code.
@@ -53,6 +63,17 @@ Worth 25% of the course grade.
    course's own handouts and solutions. Files over 2 MB don't belong in git: a script downloads
    large datasets into `data/raw/`, which is gitignored.
 
+## Lessons
+
+Mistakes that cost real time here, each with the habit that prevents it and where it happened. Add
+one when a one-line habit would have saved an hour, and delete it once a CI check or a test enforces
+it. A measurement goes in [findings.md](docs/llm-wiki/findings.md) instead.
+
+- **Try a hypothesis on a small counterexample before writing it down.** H2 first claimed that
+  closing a road on no minimum cut can't lower the max flow, but closing one can create a new,
+  smaller cut. It went into `findings.md` that way and was only caught in the Codex review of pull
+  request #1 (commit 61ba6d9).
+
 ## Current state
 
 **23 October 2026: Phase 2 (proposal) is next.** The team chose **topic 6, the Wildfire Evacuation
@@ -63,7 +84,9 @@ bottleneck roads, then the closure and widening what-ifs. The fire extension (la
 app (layer 3) come after it; [docs/plan.md](docs/plan.md#scope) has the scope. The folders and the
 Python tooling are set up; no algorithm code exists yet.
 
-Update this paragraph when a phase starts or finishes, or a layer is finished.
+What has merged is in [CHANGELOG.md](CHANGELOG.md), and where each phase stands is in the plan's
+[Status](docs/plan.md#status) table. Update this paragraph when a phase starts or finishes, or a
+layer is finished.
 
 ## Stack
 
@@ -148,6 +171,11 @@ Squash and rebase merging are turned off for the repository.
 
 - **Commits:** short imperative subject (`Add Dijkstra with a binary heap`), the *why* in the body
   when it isn't obvious. No tool attribution (hard rule 5).
+- **A feature brings its own record, in its own pull request:** a line in
+  [CHANGELOG.md](CHANGELOG.md), the llm-wiki page it makes untrue, and an entry in
+  [findings.md](docs/llm-wiki/findings.md) if it measured anything. A pull request that needs none
+  of them says why in its description. Nobody writes the record afterwards, so nothing is left to
+  forget.
 - **Changelog:** every notable change adds a line under `## [Unreleased]` in
   [CHANGELOG.md](CHANGELOG.md) in the same pull request, ending with the author's GitHub handle.
   That, the pull request's *Contribution* section and the git history are what the report's
