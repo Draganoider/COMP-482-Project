@@ -19,7 +19,7 @@ the demo.
 
 | Name | GitHub | Role |
 |---|---|---|
-| May | [@msoemoe18](https://github.com/msoemoe18) | Project Lead: meetings, deadlines, submissions |
+| May Thu Soe Moe | [@msoemoe18](https://github.com/msoemoe18) | Project Lead: meetings, deadlines, submissions |
 | | [@aartigapo](https://github.com/aartigapo) | Algorithms Lead: problem statement, pseudocode, proofs, runtime analysis |
 | Yevhen Mishchenko | [@Draganoider](https://github.com/Draganoider) | Implementation Lead: code structure, testing, this README |
 | Juan Razo | [@JuanRazoCS1](https://github.com/JuanRazoCS1) | Experiments Lead: datasets, experiment scripts, plots |
