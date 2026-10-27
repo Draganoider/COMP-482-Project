@@ -1,22 +1,32 @@
 # Environment
 
-Setting up a machine to work on the project. Language-specific steps are added once the language is
-chosen (plan D4).
+Setting up a machine to work on the project, in Python (plan D8).
 
 ## Everyone
 
 | Tool | Why | Check |
 |---|---|---|
 | Git | Version control | `git --version` |
-| GitHub CLI | `gh pr create --base test`, `gh pr checkout`, the review flow | `gh auth status` |
-| Python 3 | Runs `.github/scripts/check_links.py`, whatever the project language | `python --version` |
+| GitHub CLI | `gh pr create`, `gh pr checkout`, the review flow | `gh auth status` |
+| Python 3.11 or newer | Everything we write (plan D8) | `python --version` |
 
 ```bash
 gh repo clone Draganoider/COMP-482-Project
 cd COMP-482-Project
-git switch test
-python .github/scripts/check_links.py
+python -m venv .venv
+.venv\Scripts\Activate.ps1          # macOS/Linux: source .venv/bin/activate
+pip install -e ".[dev]"
+pytest
 ```
+
+`pip install -e` installs our package, `evac`, in editable mode: edits in `src/evac/` take effect
+without reinstalling. Activate the virtual environment in every new terminal before running
+`pytest`, `ruff` or an experiment. In VS Code, pick `.venv` as the interpreter
+(*Python: Select Interpreter*) and the editor does it for you.
+
+On Windows, if `Activate.ps1` is refused with "running scripts is disabled", run
+`Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` once in PowerShell, or use
+`.venv\Scripts\activate.bat` from cmd.
 
 ## Line endings
 

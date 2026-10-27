@@ -1,12 +1,11 @@
 name: CI
 
 # Runs on every pull request into test or main, and on pushes to them (small fixes may be committed
-# straight to test). `main` requires the "Hygiene checks" job to pass before a pull request merges.
+# straight to test). `main` requires both jobs, "Hygiene checks" and "Lint and tests", to pass
+# before a pull request merges.
 #
-# Only the repository hygiene checks exist so far: they need no toolchain and catch the mistakes
-# that happen before there is code. A "Tests" job (build, test suite, a quick run of each
-# experiment) is added when the language is chosen (docs/plan.md, D4); add it to main's required
-# checks at the same time.
+# Hygiene checks need no toolchain and catch repository mistakes (secrets, large files, broken doc
+# links, attribution lines). "Lint and tests" runs ruff and pytest on Python 3.12 (docs/plan.md, D8).
 
 on:
   push:
@@ -145,3 +144,25 @@ jobs:
           print("\n".join(errors) if errors else f"OK: {len(commits)} commits and the description carry no AI attribution lines")
           sys.exit(1 if errors else 0)
           PY
+
+  tests:
+    name: Lint and tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: pyproject.toml
+
+      - name: Install the package and dev tools
+        run: pip install -e ".[dev]"
+
+      - name: Check style (ruff)
+        run: ruff check .
+
+      - name: Run tests (pytest)
+        run: pytest

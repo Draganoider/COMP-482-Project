@@ -24,6 +24,16 @@ Worth 25% of the course grade.
    [course-conventions.md](docs/llm-wiki/course-conventions.md). Results so far are in
    [findings.md](docs/llm-wiki/findings.md).
 
+## Where knowledge lives
+
+| What | Where | Write to it when |
+|---|---|---|
+| Phases, scope, roles, decisions and open questions | [docs/plan.md](docs/plan.md) | A phase starts or ends, a decision would cost more than an hour to reverse, a question is answered |
+| What changed | [CHANGELOG.md](CHANGELOG.md) | In the pull request that makes the change, under `[Unreleased]` |
+| How things work, setup, and what was measured or learned | [docs/llm-wiki/](docs/llm-wiki/README.md) | The day you measure something, in [findings.md](docs/llm-wiki/findings.md), negative results included; a reference page in the pull request that changes what it describes |
+
+None of these is loaded into every session the way this file is; read the one you need.
+
 ## Hard rules
 
 1. **No claim without evidence.** The grade is mostly analysis and evidence, not code.
@@ -53,51 +63,82 @@ Worth 25% of the course grade.
    course's own handouts and solutions. Files over 2 MB don't belong in git: a script downloads
    large datasets into `data/raw/`, which is gitignored.
 
+## Lessons
+
+Mistakes that cost real time here, each with the habit that prevents it and where it happened. Add
+one when a one-line habit would have saved an hour, and delete it once a CI check or a test enforces
+it. A measurement goes in [findings.md](docs/llm-wiki/findings.md) instead.
+
+- **Try a hypothesis on a small counterexample before writing it down.** H2 first claimed that
+  closing a road on no minimum cut can't lower the max flow, but closing one can create a new,
+  smaller cut. It went into `findings.md` that way and was only caught in the Codex review of pull
+  request #1 (commit 61ba6d9).
+
 ## Current state
 
-**20 October 2026: Phase 1 (team formation).** The repository and its conventions are set up. **The
-topic and the language are not chosen yet**; the team decides them together for the proposal.
-[docs/proposal/topic-comparison.md](docs/proposal/topic-comparison.md) compares the outline's ideas
-from the implementation side. No code exists yet, so CI runs only the repository hygiene checks.
+**23 October 2026: Phase 2 (proposal) is next.** The team chose **topic 6, the Wildfire Evacuation
+Planner**, and **Python**, and agreed the roles ([docs/plan.md](docs/plan.md#team-and-roles)). The
+project is built in three layers, and **layer 1, the outline's baseline, is the main deliverable**:
+max flow for the cars per hour a Los Angeles road network can move to shelters, min cut for the
+bottleneck roads, then the closure and widening what-ifs. The fire extension (layer 2) and the map
+app (layer 3) come after it; [docs/plan.md](docs/plan.md#scope) has the scope. The folders and the
+Python tooling are set up; no algorithm code exists yet.
 
-Update this paragraph when a phase starts or finishes, or the topic or language is decided.
+What has merged is in [CHANGELOG.md](CHANGELOG.md), and where each phase stands is in the plan's
+[Status](docs/plan.md#status) table. Update this paragraph when a phase starts or finishes, or a
+layer is finished.
 
 ## Stack
 
 | Piece | Choice |
 |---|---|
-| Language | **Not decided** (see [docs/plan.md](docs/plan.md#open-questions)) |
-| Tests | Decided with the language |
-| Plots | Decided with the language |
-| CI | GitHub Actions: [.github/workflows/ci.yml](.github/workflows/ci.yml) |
+| Language | Python 3.11 or newer (3.12 in CI) |
+| Package | `evac`, in `src/evac/`, installed in editable mode |
+| Tests and style | pytest, ruff (settings in [pyproject.toml](pyproject.toml)) |
+| Reference in tests only | NetworkX: our max flow must give the same value. **Never imported in `src/`** (hard rule 3) |
+| Road data | OSMnx, added with the data issue |
+| Plots | matplotlib, added with the first experiment |
+| App (layer 3) | FastAPI, MapLibre, deck.gl; decided in detail when layer 3 starts |
+| CI | GitHub Actions: [.github/workflows/ci.yml](.github/workflows/ci.yml), hygiene checks plus ruff and pytest |
 
-When the language is chosen, fill in this table, *Repo layout*, *Getting set up*, the CI test job,
-`.gitignore`, `/check` in [.claude/commands/](.claude/commands/), and the README's commands.
+A new dependency goes in `pyproject.toml` in the pull request that first uses it, with a line in
+[docs/references.md](docs/references.md).
+
+## Getting set up
+
+```bash
+python -m venv .venv
+.venv\Scripts\Activate.ps1          # macOS/Linux: source .venv/bin/activate
+pip install -e ".[dev]"
+pytest
+ruff check .
+```
 
 ## Repo layout
 
-| Path | Contents |
-|---|---|
-| `docs/` | The plan, the assignment summary, the llm-wiki, the proposal and report drafts. [docs/README.md](docs/README.md) maps them |
-| `.github/` | CI, the pull request templates, the issue forms and the link checker |
-| `.claude/` | Claude Code settings and slash commands, shared by the team |
-| `.scratch/` | Your own throwaway files. Gitignored; nothing in it is ever committed |
+Folders follow what we hand in (plan D9): every number in the report comes from an experiment in
+`experiments/`, lands in `results/`, and appears in `report/`.
 
-Planned once the language is chosen (rename to the language's conventions):
-
-| Path | Contents |
-|---|---|
-| `src/` | The algorithms, one module per algorithm, plus the data structures they share |
-| `tests/` | Correctness tests, including the brute-force cross-checks |
-| `experiments/` | One entry point per experiment, each runnable with one command |
-| `results/` | What the experiments write: CSV tables and plots. The ones the report uses are committed |
-| `data/` | Small datasets, committed, with their source in `docs/references.md`. Large ones go in `data/raw/`, gitignored and downloaded by a script |
+| Path | Contents | Owner |
+|---|---|---|
+| `analysis/` | Problem statement, pseudocode, correctness proofs, runtime analysis | Algorithms |
+| `src/evac/` | The algorithms, one module per algorithm, plus the graph and data structures they share | Implementation |
+| `tests/` | Correctness tests, including the brute-force cross-checks | Implementation |
+| `experiments/` | One script per experiment (E1–E5), each runnable with one command | Experiments |
+| `results/` | What the experiments write: CSV tables and plots. The ones the report uses are committed | Experiments |
+| `data/` | Small datasets, committed, with their source in `docs/references.md`. Large downloads go in `data/raw/`, gitignored and fetched by a script | Experiments |
+| `report/` | The proposal and the final report: outlines, figures, submitted PDFs | Report and Presentation |
+| `app/` | The map app (layer 3). Displays results only; built last | Implementation |
+| `docs/` | How we work: the plan, the assignment summary, the llm-wiki, references. [docs/README.md](docs/README.md) maps them | Everyone |
+| `.github/` | CI, the pull request templates, the issue forms and the link checker | Implementation |
+| `.claude/` | Claude Code settings and slash commands, shared by the team | Implementation |
+| `.scratch/` | Your own throwaway files. Gitignored; nothing in it is ever committed | |
 
 ## Branching and pull requests
 
-- **`main`** is the default branch and **protected**: changes arrive only as a pull request from
+- **`test`** is the default branch, and where all work lands. Not protected.
+- **`main`** is the release branch, and **protected**: changes arrive only as a pull request from
   `test`, approved by one teammate, with CI green. It holds what was submitted, tagged per phase.
-- **`test`** is where all work lands. Not protected.
 - Work branches come off `test`: `feature/...`, `fix/...`, `exp/...` (experiments),
   `docs/...`, `chore/...`.
 
@@ -106,26 +147,35 @@ git switch test && git pull
 git switch -c feature/short-name
 # ... work, commit ...
 git push -u origin feature/short-name
-gh pr create --base test            # NOT main, which is the default
+gh pr create                        # into test, the default
 ```
 
-**`--base test` matters.** `main` is the default branch, so GitHub proposes `main` for every new
-pull request. A pull request into `main` from anything but `test` is wrong; retarget it.
+A pull request into `main` from anything but `test` is wrong; retarget it to `test`. Because `test`
+is the default branch, `Closes #N` closes the issue when the pull request merges into `test`.
 
 **A direct commit to `test` is fine only for a small change:** a typo, a broken link, a doc
 correction, formatting, or a one-line fix that doesn't change what an algorithm computes or what an
 experiment measures. Anything else, and anything you're unsure about, goes through a pull request.
 A direct commit still needs CI green and a changelog line if it's notable.
 
-Merging:
-- **Into `test`: squash and merge**, with a message that says what and why.
-- **`test` into `main`: create a merge commit**, never squash, or the branches drift apart. Use the
-  submission template: `gh pr create --base main --head test --template submission.md`.
+**Merging.** Every merge is a **merge commit**, so each branch stays visible in the history.
+Squash and rebase merging are turned off for the repository.
+
+- **Into `test`:** the branch's commits arrive as they are, so keep them tidy: each one says what
+  and why.
+- **`test` into `main`:** a merge commit too; squashing would give `main` commits `test` doesn't
+  have, and the branches would drift apart. Use the submission template:
+  `gh pr create --base main --head test --template submission.md`.
 
 ## Working conventions
 
 - **Commits:** short imperative subject (`Add Dijkstra with a binary heap`), the *why* in the body
   when it isn't obvious. No tool attribution (hard rule 5).
+- **A feature brings its own record, in its own pull request:** a line in
+  [CHANGELOG.md](CHANGELOG.md), the llm-wiki page it makes untrue, and an entry in
+  [findings.md](docs/llm-wiki/findings.md) if it measured anything. A pull request that needs none
+  of them says why in its description. Nobody writes the record afterwards, so nothing is left to
+  forget.
 - **Changelog:** every notable change adds a line under `## [Unreleased]` in
   [CHANGELOG.md](CHANGELOG.md) in the same pull request, ending with the author's GitHub handle.
   That, the pull request's *Contribution* section and the git history are what the report's

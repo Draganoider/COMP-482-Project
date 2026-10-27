@@ -1,25 +1,40 @@
 # Course conventions
 
 How COMP 482 wants pseudocode, proofs and runtime analysis written, so the report reads the way the
-course grades. **Still to confirm** with the lectures and the textbook (plan Q6); the Algorithms
-Lead owns this page. Until confirmed, the entries below are the standard forms, not the course's
-stated preference.
+course grades. The Algorithms Lead owns this page. Checked against the lecture slides for weeks 1–10
+on 2026-10-22 (the slides themselves are on Canvas, not in this public repository).
 
-## Textbook
+## Textbook and syllabus
 
-*To confirm.* The course's topics (interval partitioning, greedy stays ahead, network flow
-applications) match Kleinberg and Tardos, *Algorithm Design*. Once confirmed, cite it in
-[../references.md](../references.md) and use its notation.
+- **Main textbook: Kleinberg and Tardos, *Algorithm Design*.** Second text: Cormen et al.,
+  *Introduction to Algorithms*. Use Kleinberg and Tardos's notation and proof forms first.
+- **Taught by week 10:** asymptotic analysis and recurrences, divide and conquer, BFS, DFS and
+  topological sort, Dijkstra, Bellman-Ford, Floyd-Warshall, Kruskal, Prim, greedy algorithms
+  (activity selection, fractional knapsack, Huffman), dynamic programming (0-1 knapsack, matrix
+  chain, LCS).
+- **Still to come:** binary heaps and search trees, then **network flow** and NP-completeness,
+  last in the semester. A flow-based project has to learn max flow from the textbook (Kleinberg
+  and Tardos, chapter 7) before the lectures reach it.
 
 ## Pseudocode
 
-- Numbered lines, so proofs and the runtime analysis can refer to them ("line 7 runs at most E
-  times").
+The lectures write pseudocode as plain English-like statements with indentation, under an
+*Input* and *Output* header; the first lectures number the lines, later ones use braces. For the
+report:
+
+- An *Input* / *Output* header, then numbered lines, so proofs and the runtime analysis can refer
+  to them ("line 7 runs at most E times").
 - Name the data structure each operation uses (`Q.extract-min()`), since it decides the runtime.
 - Each algorithm module in the code names the pseudocode it implements (AGENTS.md, *Writing
   algorithm code*).
 
 ## Correctness arguments
+
+The lectures prove a greedy algorithm correct in two steps: **some optimal solution contains the
+greedy choice** (shown by swapping it into an optimal solution, the "cut-and-paste" or exchange
+argument), and **optimal substructure** (what's left is optimal for the subproblem, by
+contradiction). Dynamic programming is argued from optimal substructure and overlapping
+subproblems. Follow the same shape in the report.
 
 The standard proof forms, by algorithm type:
 

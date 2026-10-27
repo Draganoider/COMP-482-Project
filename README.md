@@ -1,14 +1,17 @@
-# COMP 482 Group Project
+# Wildfire Evacuation Planner
 
-**Topic: to be decided.** The COMP 482 (Algorithms) group project at CSUN, Fall 2026: we design,
-implement, analyse and test algorithms from the course on a real problem, then prove and measure
-what we claim.
+The COMP 482 (Algorithms) group project at CSUN, Fall 2026. How many cars per hour can a Los
+Angeles neighbourhood's roads move to shelters, and which roads hold everyone back? We answer it
+with max flow and min cut on a real road network, prove the algorithms correct, and check the
+analysis with experiments. Then we add a fire that closes roads as it spreads, and a map app for
+the demo.
 
 - **Working in this repo:** [CONTRIBUTING.md](CONTRIBUTING.md) for the short version,
   [AGENTS.md](AGENTS.md) for the full rules, [REVIEWING.md](REVIEWING.md) for reviewing a pull
   request
-- **Plan, deadlines and decisions:** [docs/plan.md](docs/plan.md)
+- **Scope, deadlines and decisions:** [docs/plan.md](docs/plan.md)
 - **What's graded:** [docs/assignments/project-outline.md](docs/assignments/project-outline.md)
+- **The proposal and the report:** [report/](report/README.md)
 - **Everything else written down:** [docs/](docs/README.md)
 - **What changed:** [CHANGELOG.md](CHANGELOG.md)
 
@@ -16,24 +19,29 @@ what we claim.
 
 | Name | GitHub | Role |
 |---|---|---|
+| May Thu Soe Moe | [@msoemoe18](https://github.com/msoemoe18) | Project Lead: meetings, deadlines, submissions |
+| Abigail Artiga | [@aartigapo](https://github.com/aartigapo) | Algorithms Lead: problem statement, pseudocode, proofs, runtime analysis |
 | Yevhen Mishchenko | [@Draganoider](https://github.com/Draganoider) | Implementation Lead: code structure, testing, this README |
-| | | Project Lead |
-| | | Algorithms Lead |
-| | | Experiments Lead |
-| | | Report and Presentation Lead |
+| Juan Razo | [@JuanRazoCS1](https://github.com/JuanRazoCS1) | Experiments Lead: datasets, experiment scripts, plots |
+| Nicole | [@nicolebonillaa](https://github.com/nicolebonillaa) | Report and Presentation Lead: report, editing, slides |
 
-Everyone codes and everyone writes; the roles say who coordinates what.
+Everyone codes and everyone writes; the roles say who coordinates what. Fix your own row if your
+name is missing or wrong.
 
 ## Setup
 
-Not written yet: it depends on the language, which the team hasn't chosen. Until then you need Git
-and, for the shortcuts in the docs, the [GitHub CLI](https://cli.github.com/) (`gh auth login`).
+You need Python 3.11 or newer, Git, and for the shortcuts in the docs the
+[GitHub CLI](https://cli.github.com/) (`gh auth login`).
 
 ```bash
 gh repo clone Draganoider/COMP-482-Project
 cd COMP-482-Project
-git switch test
+python -m venv .venv
+.venv\Scripts\Activate.ps1          # macOS/Linux: source .venv/bin/activate
+pip install -e ".[dev]"
 ```
+
+You're on `test`, the default branch, where all work happens. `main` holds what we submitted.
 
 ## Running the experiments
 
@@ -45,8 +53,13 @@ Every experiment runs with one command and writes its tables and plots to `resul
 
 ## Tests
 
-Not set up yet; added with the language. CI already runs the repository checks (secrets, large
-files, broken doc links, attribution lines) on every pull request.
+```bash
+pytest          # correctness tests, including brute-force cross-checks
+ruff check .    # style; add --fix to correct most findings
+```
+
+CI runs both on every pull request, plus the repository checks (secrets, large files, broken doc
+links, attribution lines).
 
 ## AI usage
 
@@ -65,11 +78,16 @@ commit. How we use them:
 ## Project layout
 
 ```
-docs/            plan, assignment summary, llm-wiki, proposal and report drafts
-.github/         CI, pull request templates, issue forms
-.claude/         shared Claude Code settings and slash commands
-.scratch/        personal throwaway files (gitignored)
+analysis/        problem statement, pseudocode, proofs, runtime analysis
+src/evac/        the algorithms (Python package)
+tests/           correctness tests, brute-force cross-checks
+experiments/     one script per experiment, one command each
+results/         tables and plots the experiments write
+data/            road network, shelters, households (large downloads stay out of git)
+report/          proposal and final report: outlines, figures, submitted PDFs
+app/             the map app, for the demo (built last)
+docs/            how we work: plan, assignment summary, llm-wiki, references
 ```
 
-The code folders (`src/`, `tests/`, `experiments/`, `results/`, `data/`) are added once the
-language is chosen; [AGENTS.md](AGENTS.md#repo-layout) describes the plan.
+Every number in the report comes from a script in `experiments/`, lands in `results/`, and appears
+in `report/`. [AGENTS.md](AGENTS.md#repo-layout) has who owns each folder.

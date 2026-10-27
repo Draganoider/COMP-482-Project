@@ -1,5 +1,5 @@
 <!--
-Day-to-day work goes into `test`. Check the base branch above says `test`, not `main`.
+Day-to-day work goes into `test`, the default branch. `main` is only for submissions.
 Submitting a phase (test into main)? Use the submission template instead:
   gh pr create --base main --head test --template submission.md
 -->
@@ -43,6 +43,8 @@ Closes #<!-- number -->
 ## Docs
 
 - [ ] `docs/plan.md`, `AGENTS.md` (*Current state*) and the llm-wiki updated if this makes them untrue
+- [ ] Any measurement or surprising fact recorded in `docs/llm-wiki/findings.md`, negative results included
+- [ ] If this needs no changelog line, wiki update or finding, the reason is under *Notes for the reviewer*
 
 ## Notes for the reviewer
 
