@@ -17,7 +17,7 @@ what we claim.
 | Name | GitHub | Role |
 |---|---|---|
 | Yevhen Mishchenko | [@Draganoider](https://github.com/Draganoider) | Implementation Lead: code structure, testing, this README |
-| | | Project Lead |
+| May Thu Soe Moe | [@msoemoe18](https://github.com/msoemoe18) | Project Lead |
 | | | Algorithms Lead |
 | | | Experiments Lead |
 | | | Report and Presentation Lead |
