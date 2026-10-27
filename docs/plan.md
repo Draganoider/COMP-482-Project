@@ -43,7 +43,7 @@ Everyone codes and everyone writes. The roles say who coordinates what, from the
 | Role | Coordinates | Who |
 |---|---|---|
 | Project Lead | Meetings, deadlines, submitting deliverables | May Thu Soe Moe (@msoemoe18) |
-| Algorithms Lead | Problem statement, pseudocode, correctness proofs, runtime analysis | @aartigapo |
+| Algorithms Lead | Problem statement, pseudocode, correctness proofs, runtime analysis | Abigail Artiga @aartigapo |
 | Implementation Lead | Code structure, testing, the repository README | Yevhen Mishchenko (@Draganoider) |
 | Experiments Lead | Datasets, experiment scripts, result plots | Juan Razo (@JuanRazoCS1) |
 | Report and Presentation Lead | Report organisation and editing, slides | Nicole (@nicolebonillaa) |
