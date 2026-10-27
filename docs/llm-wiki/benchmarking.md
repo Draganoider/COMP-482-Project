@@ -1,8 +1,8 @@
 # Benchmarking method
 
 How we time and compare algorithms, so that results are fair, repeatable and say what the report
-claims. Language-specific details (timers, warm-up, plotting) are added when the language is
-chosen. Every experiment follows this; reviewers check it ([REVIEWING.md](../../REVIEWING.md),
+claims. Python-specific details (timers, warm-up, plotting) are added with the first experiment,
+once they've been tried on our code. Every experiment follows this; reviewers check it ([REVIEWING.md](../../REVIEWING.md),
 step 6).
 
 ## Inputs

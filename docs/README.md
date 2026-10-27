@@ -7,6 +7,7 @@ in [../analysis/](../analysis/README.md), the proposal and report in [../report/
 | Where | What's in it | Update it when |
 |---|---|---|
 | [plan.md](plan.md) | Status, deadlines, team and roles, the decision log, open questions | a phase starts or ends, a decision is made, a question is answered |
+| [../CHANGELOG.md](../CHANGELOG.md) | What changed, newest first, with each line's author | you pick up work, or before saying what exists; every pull request adds its line |
 | [assignments/project-outline.md](assignments/project-outline.md) | What the course asks for and how it's graded, summarised | the instructor changes or clarifies the requirements |
 | [llm-wiki/](llm-wiki/README.md) | What we know and what we measured: [findings](llm-wiki/findings.md), [benchmarking method](llm-wiki/benchmarking.md), [course conventions](llm-wiki/course-conventions.md), [environment](llm-wiki/environment.md) | the day you measure or learn something |
 | [research/](research/2026-10-20-topic-comparison.md) | Dated snapshots, such as the topic comparison that informed the choice. Not updated | you want to know where an idea came from |

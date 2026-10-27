@@ -56,9 +56,10 @@ Without the GitHub CLI: `git fetch origin pull/<number>/head:pr-<number>`, then
      every number in the pull request description matches it.
 
 7. **Check the paperwork.** The description matches the diff. `Closes #n` only when every
-   checklist item is met; otherwise `Part of #n`. A changelog line with the author's handle.
-   External code or data credited in [docs/references.md](docs/references.md). Docs updated in the
-   same pull request. No AI attribution lines in commits or the description.
+   checklist item is met; otherwise `Part of #n`. A changelog line with the author's handle, saying
+   what changed and why. External code or data credited in [docs/references.md](docs/references.md).
+   Every doc or llm-wiki page that describes what changed is updated in the same pull request; a
+   stale page is a **Should fix**. No AI attribution lines in commits or the description.
 
 A pull request that changes only docs skips steps 3 to 6; say so under *How I reviewed*.
 

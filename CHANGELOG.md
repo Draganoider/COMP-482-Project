@@ -15,10 +15,17 @@ How it's kept (see [AGENTS.md](AGENTS.md#working-conventions)):
 - Submitting a phase (the `test` → `main` pull request) renames **Unreleased** to the phase and
   date, tags `main`, and starts a new empty **Unreleased**.
 
+What is still to do is in the issue tracker and the [plan](docs/plan.md#status), not here.
+
 ## [Unreleased]
 
 ### Changed
 
+- **docs:** `AGENTS.md` gains a *Where knowledge lives* table (plan, changelog, llm-wiki) and a
+  *Lessons* section, and says a feature brings its own changelog line, wiki update and finding in
+  its pull request; the PR template asks for the finding or a reason. The llm-wiki index says what
+  goes where, the docs map lists the changelog, and the setup and benchmarking pages no longer wait
+  for a language. The unlinked copy of `/check` in `.agents/skills/` is gone. @Draganoider
 - **repo:** pull requests merge with a merge commit, so each branch stays visible in the history;
   squash and rebase merging are off. @Draganoider
 - **docs:** the proposal and report checklists moved from `docs/` to `report/`; the topic
