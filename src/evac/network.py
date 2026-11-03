@@ -36,6 +36,8 @@ class FlowNetwork:
         self._residual: list[int] = []  # edge id -> residual capacity
         self._capacity: list[int] = []  # edge id -> capacity (0 on reverse edges)
         self._terminal: list[bool] = []  # edge id -> joins s or t (see with_super_terminals)
+        self._terminal_edges: list[int] = []  # ids of the super-terminal roads
+        self._road_total = 0  # sum of the real roads' capacities
 
     # Building
 
@@ -64,17 +66,40 @@ class FlowNetwork:
         self._terminal += [terminal, terminal]
         self._adj[u].append(e)
         self._adj[v].append(e ^ 1)
+        if terminal:
+            self._terminal_edges.append(e)
+        else:
+            self._road_total += capacity
+            self._keep_terminals_largest()
         return e
 
     def set_capacity(self, e: int, capacity: int) -> None:
         """Change road `e`'s capacity, keeping its current flow. For the closure and widening
-        what-ifs. Raises ValueError if the flow on `e` would exceed the new capacity."""
+        what-ifs. Raises ValueError if the flow on `e` would exceed the new capacity, or if `e` is
+        a super-terminal edge, which isn't a road."""
         self._check_road(e)
+        if self._terminal[e]:
+            raise ValueError(f"edge {e} joins the super-source or super-sink; it isn't a road")
         capacity = index(capacity)
         if capacity < self.flow(e):
             raise ValueError(f"edge {e} carries {self.flow(e)}, more than capacity {capacity}")
-        self._capacity[e] = capacity
+        self._road_total += capacity - self._capacity[e]
         self._residual[e] = capacity - self.flow(e)
+        self._capacity[e] = capacity
+        self._keep_terminals_largest()
+
+    def _keep_terminals_largest(self) -> None:
+        """Raise every super-terminal edge to one more than the total road capacity, if a new or
+        widened road has caught up with them, so they still can't be in a minimum cut. Their flow
+        is kept. O(1) unless they need raising: all terminal edges always share one capacity, so
+        checking the first is enough."""
+        if not self._terminal_edges or self._capacity[self._terminal_edges[0]] > self._road_total:
+            return
+        big = self._road_total + 1
+        for e in self._terminal_edges:
+            if self._capacity[e] < big:
+                self._residual[e] += big - self._capacity[e]
+                self._capacity[e] = big
 
     def copy(self) -> "FlowNetwork":
         """An independent copy, with the same edge ids, capacities and current flow."""
@@ -84,6 +109,8 @@ class FlowNetwork:
         other._residual = list(self._residual)
         other._capacity = list(self._capacity)
         other._terminal = list(self._terminal)
+        other._terminal_edges = list(self._terminal_edges)
+        other._road_total = self._road_total
         return other
 
     def reset_flow(self) -> None:
@@ -99,7 +126,10 @@ class FlowNetwork:
         The new edges have capacity one more than the sum of all road capacities, so no s-t cut
         that contains one can be minimum: the cut of all the roads is always smaller. They are
         marked, so `is_terminal_edge` lets the min cut skip them. Road edge ids are unchanged.
+        Adding or widening a road on the result raises them again, so this stays true.
         """
+        if self._terminal_edges:
+            raise ValueError("the network already has a super-source and super-sink")
         sources, sinks = list(dict.fromkeys(sources)), list(dict.fromkeys(sinks))
         for u in sources + sinks:
             if u not in self._adj:
@@ -181,7 +211,7 @@ class FlowNetwork:
 
     def total_capacity(self) -> int:
         """The sum of the capacities of the real roads."""
-        return sum(self._capacity[e] for e in self.roads())
+        return self._road_total
 
     def nodes(self) -> Iterator[Node]:
         """Every node, in the order they were added."""

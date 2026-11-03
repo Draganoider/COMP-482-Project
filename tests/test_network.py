@@ -209,6 +209,32 @@ def test_super_terminals_dont_change_the_max_flow(random_networks):
         assert nx.maximum_flow_value(to_networkx(joined), "s", "t") == direct
 
 
+def test_super_terminals_stay_largest_after_widening_or_adding_roads():
+    """Widening a road on the joined network (the what-ifs, #9) must not let a terminal edge
+    become the bottleneck."""
+    network = FlowNetwork()
+    road = network.add_edge(1, 2, 1)
+    joined = network.with_super_terminals(sources=[1], sinks=[2])
+    terminal = [e for e in joined.edges() if joined.is_terminal_edge(e)]
+    joined.push(terminal[0], 1)  # some flow on a terminal edge, which raising must keep
+    joined.set_capacity(road, 10)
+    assert all(joined.capacity(e) > joined.total_capacity() == 10 for e in terminal)
+    assert joined.flow(terminal[0]) == 1
+    assert nx.maximum_flow_value(to_networkx(joined), "s", "t") == 10
+    joined.add_edge(1, 2, 5)
+    assert all(joined.capacity(e) > joined.total_capacity() == 15 for e in terminal)
+    with pytest.raises(ValueError):
+        joined.set_capacity(terminal[0], 3)  # not a road
+    check_residuals(joined)
+
+
+def test_total_capacity_tracks_changes(random_networks):
+    for network in random_networks[:200]:
+        for e in list(network.roads())[:3]:
+            network.set_capacity(e, network.capacity(e) + 2)
+        assert network.total_capacity() == sum(network.capacity(e) for e in network.roads())
+
+
 def test_super_terminals_with_several_sources_and_sinks():
     network = FlowNetwork()
     network.add_edge("h1", "x", 3)
@@ -229,6 +255,9 @@ def test_super_terminals_reject_bad_input():
         network.with_super_terminals([1], [1])
     with pytest.raises(ValueError):
         network.with_super_terminals([1], [2], s=2)
+    joined = network.with_super_terminals([1], [2])
+    with pytest.raises(ValueError):  # a second pair would break the one-terminal-capacity rule
+        joined.copy().with_super_terminals([1], [2], s="s2", t="t2")
 
 
 # Random networks and the NetworkX conversion
