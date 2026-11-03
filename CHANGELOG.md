@@ -19,6 +19,15 @@ What is still to do is in the issue tracker and the [plan](docs/plan.md#status),
 
 ## [Unreleased]
 
+### Added
+
+- **algorithms:** `FlowNetwork` in `src/evac/network.py`, the network layer 1 runs on (D10): roads
+  with whole-number capacities and their own ids, parallel roads allowed, paired reverse residual
+  edges kept in step by `push`, and `with_super_terminals` joining homes to *s* and shelters to *t*
+  by marked edges larger than all road capacity together. `random_network` in
+  `src/evac/generators.py` makes seeded random networks; the tests share a NetworkX conversion
+  and 1,000 random networks from `tests/conftest.py`. @Draganoider
+
 ### Changed
 
 - **docs:** `CONTRIBUTING.md` points to the project board and says which card moves are by hand
