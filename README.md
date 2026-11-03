@@ -23,7 +23,7 @@ the demo.
 | Abigail Artiga | [@aartigapo](https://github.com/aartigapo) | Algorithms Lead: problem statement, pseudocode, proofs, runtime analysis |
 | Yevhen Mishchenko | [@Draganoider](https://github.com/Draganoider) | Implementation Lead: code structure, testing, this README |
 | Juan Razo | [@JuanRazoCS1](https://github.com/JuanRazoCS1) | Experiments Lead: datasets, experiment scripts, plots |
-| Nicole | [@nicolebonillaa](https://github.com/nicolebonillaa) | Report and Presentation Lead: report, editing, slides |
+| Nicole Uribe | [@nicolebonillaa](https://github.com/nicolebonillaa) | Report and Presentation Lead: report, editing, slides |
 
 Everyone codes and everyone writes; the roles say who coordinates what. Fix your own row if your
 name is missing or wrong.

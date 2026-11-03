@@ -1,5 +1,7 @@
 # Proposal skeleton
 
+**Kept for the record: the proposal was submitted, and [proposal.pdf](proposal.pdf) is what was handed in.**
+
 A starting point for the proposal, for the Report and Presentation Lead (@nicolebonillaa) to move
 into the tool the team writes in (plan Q8) and hand out. Each section has an owner, a length, and
 the points already agreed in [docs/plan.md](../../docs/plan.md). **The bullets are notes, not the

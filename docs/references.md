@@ -18,11 +18,15 @@ and how to get it, so the download script and this page agree.
 
 | Dataset | Source (URL) | Licence | Where it lives | Used by |
 |---|---|---|---|---|
+| OpenStreetMap road network of Pacific Palisades, Los Angeles | [openstreetmap.org](https://www.openstreetmap.org/), downloaded with OSMnx | [ODbL 1.0](https://opendatacommons.org/licenses/odbl/1-0/) | `data/raw/`, from a download script still to write | Layer 1 and the experiments; cited in the proposal |
 
 ## Articles and other sources
 
 | Source | Used for |
 |---|---|
+| Borgwardt, S. et al. (2024). *Evacuation Planning on Time-Expanded Networks with Integrated Wildfire Information*. [arXiv:2410.14500](https://arxiv.org/abs/2410.14500) | Related work: wildfire evacuation as max flow on a time-expanded network (layer 2). Cited in the proposal |
+| Transportation Research Board. *Highway Capacity Manual* | Road capacities in cars per hour from lanes and road type (plan D10). Cited in the proposal; the edition is still to note |
+| Fox LA report on the cars abandoned during the January 2025 Palisades fire evacuation | The proposal's motivation. Cited in the proposal; the article's URL and date are still to add |
 
 ## External code and libraries
 

@@ -76,13 +76,14 @@ it. A measurement goes in [findings.md](docs/llm-wiki/findings.md) instead.
 
 ## Current state
 
-**23 October 2026: Phase 2 (proposal) is next.** The team chose **topic 6, the Wildfire Evacuation
-Planner**, and **Python**, and agreed the roles ([docs/plan.md](docs/plan.md#team-and-roles)). The
-project is built in three layers, and **layer 1, the outline's baseline, is the main deliverable**:
-max flow for the cars per hour a Los Angeles road network can move to shelters, min cut for the
-bottleneck roads, then the closure and widening what-ifs. The fire extension (layer 2) and the map
-app (layer 3) come after it; [docs/plan.md](docs/plan.md#scope) has the scope. The folders and the
-Python tooling are set up; no algorithm code exists yet.
+**3 November 2026: Phase 2 (proposal) is submitted; Phase 3 (final report) is next.** The
+[submitted proposal](report/proposal/proposal.pdf) is what we're graded against: **topic 6, the
+Wildfire Evacuation Planner**, in **Python**. **Layer 1 is the commitment**: max flow
+(Ford-Fulkerson and Edmonds-Karp) for the cars per hour the Pacific Palisades roads can move to
+shelters at the area's exits, min cut for the bottleneck roads, then the closure and widening
+what-ifs, with experiments E1–E3. The fire extension (layer 2) and the map app (layer 3) are
+stretch goals; [docs/plan.md](docs/plan.md#scope) has the scope, and decision D10 the model. The
+folders and the Python tooling are set up; no algorithm code exists yet.
 
 What has merged is in [CHANGELOG.md](CHANGELOG.md), and where each phase stands is in the plan's
 [Status](docs/plan.md#status) table. Update this paragraph when a phase starts or finishes, or a

@@ -21,6 +21,11 @@ What is still to do is in the issue tracker and the [plan](docs/plan.md#status),
 
 ### Changed
 
+- **docs:** the proposal is submitted: the plan marks Phase 2 done and records the model it commits
+  to (D10) and the milestones (D11), with new open questions on where the homes are (Q10) and the
+  milestone dates (Q11). `AGENTS.md`'s *Current state*, the proposal checklist and the team tables
+  (Nicole's surname) match it, and the sources it cites are in `docs/references.md`. @Draganoider
+
 - **docs:** `AGENTS.md` gains a *Where knowledge lives* table (plan, changelog, llm-wiki) and a
   *Lessons* section, and says a feature brings its own changelog line, wiki update and finding in
   its pull request; the PR template asks for the finding or a reason. The llm-wiki index says what
@@ -34,6 +39,8 @@ What is still to do is in the issue tracker and the [plan](docs/plan.md#status),
   new pull requests target it; `main` stays protected as the release branch (plan D5). @Draganoider
 
 ### Added
+
+- **report:** the submitted proposal, `report/proposal/proposal.pdf`. @Draganoider
 
 - **report:** a proposal skeleton in `report/proposal/skeleton.md`: each section with its owner,
   length and the points already agreed, for the Report and Presentation Lead to hand out.

@@ -1,30 +1,29 @@
 # Proposal
 
-2–3 pages, one PDF per team, submitted on Canvas by the Project Lead. The draft lives wherever the
-team writes together (Google Docs, Overleaf); link it here once it exists, and commit the submitted
-PDF to this folder.
+2–3 pages, one PDF per team, submitted on Canvas by the Project Lead. **Submitted; due
+2026-10-31.**
 
-- **Skeleton:** [skeleton.md](skeleton.md): sections, owners, lengths and the agreed points
-- **Draft:** *link here*
-- **Submitted PDF:** *added when submitted*
+- **Submitted PDF:** [proposal.pdf](proposal.pdf), written in Google Docs
+- **Skeleton:** [skeleton.md](skeleton.md), kept for the record
 
 ## Checklist
 
-What the outline asks for, and what makes the rest of the project easier if it's settled now.
+What the outline asks for, checked against what was submitted. The open items are for the final
+report to settle.
 
-- [ ] **Title**
-- [ ] **Problem statement, precise:** inputs, outputs, what counts as a correct answer, and what
-      is being optimised. If you can't write the brute-force solution from it, it isn't precise yet.
-- [ ] **Algorithms, at least two,** each named with the course concept it uses, and what we expect
-      each one's running time to be.
-- [ ] **The baseline to compare against:** brute force on small inputs, a simpler algorithm, or a
-      real tool.
-- [ ] **Data:** where it comes from, how big it is, its licence, and how we turn it into the
-      algorithm's input. Plus the synthetic generator for the scaling experiments, since real data
-      is often too small to time (see the [topic comparison](../../docs/research/2026-10-20-topic-comparison.md#for-every-topic)).
-- [ ] **Evaluation plan:** each hypothesis, the experiment that tests it, the input sizes, and the
-      plot it produces.
-- [ ] **Roles:** who holds which lead role, from [docs/plan.md](../../docs/plan.md#team-and-roles).
-- [ ] **Stretch goal**, clearly marked as stretch: here, layers 2 and 3 from the plan's
-      [scope](../../docs/plan.md#scope).
-- [ ] **The language** (Python), and why it suits this problem.
+- [x] **Title**
+- [x] **Problem statement, precise:** section 2, made exact in plan decision D10. Still open: where
+      the homes are and how many cars each sends (plan Q10).
+- [x] **Algorithms, at least two:** Ford-Fulkerson in O(E·f\*) and Edmonds-Karp in O(VE²), and the
+      min cut from the residual graph in O(V+E).
+- [x] **The baseline to compare against:** brute force over every cut on small graphs, and
+      NetworkX in the tests.
+- [ ] **Data:** OpenStreetMap through OSMnx, capacities from the Highway Capacity Manual, and a
+      seeded synthetic generator. Still open: the network's size (recorded once it's downloaded)
+      and its licence (ODbL), which the proposal doesn't name.
+- [ ] **Evaluation plan:** E1–E3, the measures (median time, augmenting paths, max-flow value) and
+      a log-log plot. Still open: the input sizes.
+- [x] **Roles:** section 8.
+- [x] **Stretch goal**, marked as stretch: the fire (E4), the shortest-route comparison (E5) and
+      the map app.
+- [ ] **The language:** Python 3.11 or newer is named; why it suits the problem isn't said.

@@ -12,7 +12,7 @@ header.
 
 | Page | What | Layer | Status |
 |---|---|---|---|
-| `problem.md` | The precise problem: input, output, what counts as correct, what is optimised. Detailed enough to write the brute force from | 1, 2 | To write, for the proposal |
+| `problem.md` | The precise problem: input, output, what counts as correct, what is optimised. Detailed enough to write the brute force from | 1, 2 | To write, from section 2 of the [submitted proposal](../report/proposal/proposal.pdf) |
 | `max-flow.md` | Ford-Fulkerson and Edmonds-Karp: pseudocode, correctness, running time | 1 | To write |
 | `min-cut.md` | Finding the min cut from the residual graph; max-flow min-cut; closing and widening roads | 1 | To write |
 | `fire-spread.md` | Fire arrival times by Dijkstra over map cells | 2 | Later |

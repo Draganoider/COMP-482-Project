@@ -8,8 +8,8 @@ The project's status, scope, people, decisions and open questions. What's graded
 | Phase | Submit on Canvas | Due | Status |
 |---|---|---|---|
 | 1. Team formation | Team details | *TBD* | Done 2026-10-23: team of five, roles agreed, repository shared |
-| 2. Proposal | 2–3 page PDF | *TBD* | Next. Checklist in [report/proposal/](../report/proposal/README.md) |
-| 3. Final report | 8–12 page PDF, repository link, slides (if any) | *TBD* | Not started |
+| 2. Proposal | 2–3 page PDF | 2026-10-31 | Done: submitted, [proposal.pdf](../report/proposal/proposal.pdf) |
+| 3. Final report | 8–12 page PDF, repository link, slides (if any) | *TBD* | Next: layer 1 code, analysis and experiments E1–E3 |
 
 ## Scope
 
@@ -18,7 +18,7 @@ outline's bar; each later layer starts only when the one before it works and is 
 
 | Layer | What | Course concepts | Status |
 |---|---|---|---|
-| **1. Main deliverable** | The outline's baseline and stretch goals: a Los Angeles road network (Pacific Palisades, from OpenStreetMap) with capacities in cars per hour. Max flow gives the cars per hour the roads can move to **shelters**; min cut finds the bottleneck roads. Then: the capacity lost when each bottleneck road closes, and the best single road to widen, against brute force | Max flow (Ford-Fulkerson, Edmonds-Karp), max-flow min-cut, brute force | Not started |
+| **1. Main deliverable** | The outline's baseline and stretch goals: a Los Angeles road network (Pacific Palisades, from OpenStreetMap) with whole-number capacities in cars per hour (D10). Max flow gives the cars per hour the roads can move to **shelters** where the roads leave the area (D10); min cut finds the bottleneck roads. Then: the capacity lost when each bottleneck road closes, and the best single road to widen, against brute force | Max flow (Ford-Fulkerson, Edmonds-Karp), max-flow min-cut, brute force | Not started |
 | **2. Our extension** | A fire that closes roads as it spreads (Dijkstra over map cells, with wind). Max flow on a time-expanded network: how many cars reach a shelter before their roads close. Compared with everyone driving their shortest route to the nearest shelter (Dijkstra on the roads) | Dijkstra, max flow, graph modelling | Not started |
 | **3. Presentation** | A map app: start a fire, watch every car (flow decomposition), see the bottlenecks. It only displays what the Python code computes. Built last, cut first if time runs short | Flow decomposition | Not started |
 
@@ -46,7 +46,7 @@ Everyone codes and everyone writes. The roles say who coordinates what, from the
 | Algorithms Lead | Problem statement, pseudocode, correctness proofs, runtime analysis | Abigail Artiga @aartigapo |
 | Implementation Lead | Code structure, testing, the repository README | Yevhen Mishchenko (@Draganoider) |
 | Experiments Lead | Datasets, experiment scripts, result plots | Juan Razo (@JuanRazoCS1) |
-| Report and Presentation Lead | Report organisation and editing, slides | Nicole (@nicolebonillaa) |
+| Report and Presentation Lead | Report organisation and editing, slides | Nicole Uribe (@nicolebonillaa) |
 
 Where two roles meet, the default owner:
 
@@ -67,6 +67,8 @@ old one instead of editing it.
 
 | # | Date | Decision | Why |
 |---|---|---|---|
+| D11 | 2026-10-31 | The submitted [proposal](../report/proposal/proposal.pdf) commits us to layer 1 with experiments E1–E3; the fire, the shortest-route comparison and the map app (E4, E5, layer 3) are stretch goals | It's what the course now grades us against. Its milestone owners: road data and capacities Juan, problem statement and proofs Abigail, max flow, min cut and what-ifs with tests Yevhen, E1–E3 Juan, report and slides Nicole, stretch goals everyone (dates in Q11) |
+| D10 | 2026-10-31 | The model, as the proposal states it: intersections are nodes, each direction of a road is an edge, with a whole-number capacity in cars per hour from its lanes and road type (Highway Capacity Manual). Shelters sit where the roads leave the area. All homes join one source *s*, all shelters one sink *t*, by edges too large to ever limit the flow, so only real roads can be bottlenecks. Brute force checks every *s*–*t* cut on small graphs | Whole numbers make Ford-Fulkerson terminate; exits as shelters match an evacuation's goal of getting people out; the large *s* and *t* edges keep them out of the min cut |
 | D9 | 2026-10-23 | Folders by deliverable: `analysis/`, `src/`, `tests/`, `experiments/`, `results/`, `data/`, `report/`, `app/`, with `docs/` for how we work | Most of the grade is the report and its evidence, so the writing and the results get first-class places beside the code, and every number traces from `experiments/` to `results/` to `report/` |
 | D8 | 2026-10-23 | Python for all the code: 3.11 or newer, pytest, ruff. NetworkX only as a reference in tests, never in `src/` | The team agreed. Python's data and plotting libraries (OSMnx, matplotlib) fit the problem; the graded algorithms must be our own (AGENTS.md hard rule 3) |
 | D7 | 2026-10-23 | Three layers, with the outline's baseline as the main deliverable (see *Scope*). Destinations are shelters | The baseline is what the outline grades; the fire and the app add to it without putting it at risk |
@@ -83,10 +85,12 @@ old one instead of editing it.
 |---|---|---|---|
 | Q1 | Which topic? | Team | **Topic 6** (D6), 2026-10-23. The comparison that informed it is [a dated snapshot](research/2026-10-20-topic-comparison.md) |
 | Q2 | Which language? | Team | **Python** (D8), 2026-10-23 |
-| Q3 | The three due dates | Project Lead, from Canvas | |
+| Q3 | The three due dates | Project Lead, from Canvas | Proposal: 2026-10-31. Team formation and the final report: still to find |
 | Q4 | Does the course's AI policy accept our *AI usage* disclosure, or does it ask for more (per-assignment statements, logs)? | Project Lead, instructor | |
 | Q5 | Is a public repository acceptable for this course while the semester runs? | Project Lead, instructor | |
 | Q6 | Which textbook and pseudocode style does the course expect? | Algorithms Lead | **Answered 2026-10-22** from the lecture slides: Kleinberg and Tardos (main), Cormen et al. (second). Style in [course-conventions.md](llm-wiki/course-conventions.md) |
 | Q7 | Are slides or a presentation required, or optional? | Project Lead, instructor | |
-| Q8 | Where do we write the proposal and report together (Google Docs, Overleaf, Word)? | Report and Presentation Lead | |
+| Q8 | Where do we write the proposal and report together (Google Docs, Overleaf, Word)? | Report and Presentation Lead | The proposal was written in Google Docs. The report: not yet decided |
 | Q9 | Network flow is taught last in the course. Who reads Kleinberg and Tardos chapter 7 first, and when? | Algorithms Lead | |
+| Q10 | Where are the homes, and how many cars does each send? The proposal suggests US Census data and leaves the rest to the team | Experiments Lead, team | |
+| Q11 | The proposal gives every milestone after it "done by 10/30/2026", before the proposal itself was due. What are the real dates? | Project Lead | |
