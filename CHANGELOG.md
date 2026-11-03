@@ -21,6 +21,9 @@ What is still to do is in the issue tracker and the [plan](docs/plan.md#status),
 
 ### Changed
 
+- **docs:** `CONTRIBUTING.md` points to the project board and says which card moves are by hand
+  (*In progress*) and which happen on their own. @Draganoider
+
 - **docs:** the proposal is submitted: the plan marks Phase 2 done and records the model it commits
   to (D10) and the milestones (D11), with new open questions on where the homes are (Q10) and the
   milestone dates (Q11). `AGENTS.md`'s *Current state*, the proposal checklist and the team tables

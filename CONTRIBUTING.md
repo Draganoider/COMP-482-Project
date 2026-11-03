@@ -10,8 +10,11 @@ pull request can be your own row in the README's Team table.
 
 ## Claiming work
 
-- Every task is an issue. Pick one nobody is assigned to, **assign yourself**, and say so in the
-  team chat. If you want one someone else has, ask them first.
+- Every task is an issue, on the [project board](https://github.com/users/Draganoider/projects/2)
+  (private; ask @Draganoider for an invite). Pick one nobody is assigned to, **assign yourself**,
+  drag it to **In progress**, and say so in the team chat. If you want one someone else has, ask
+  them first. The rest moves by itself: opening a pull request with `Closes #N` moves the card to
+  *In review*, and merging it into `test` to *Done*.
 - Check what it's **blocked by** before you start.
 - Stick to the files the issue owns. That's what keeps five people from editing the same lines.
 - Filing something new? Use the **Task**, **Bug**, **Experiment result** or **Assignment question**
