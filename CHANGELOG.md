@@ -50,6 +50,10 @@ What is still to do is in the issue tracker and the [plan](docs/plan.md#status),
 - **repo:** `test` is now the default branch, so `Closes #N` closes issues on merge into `test` and
   new pull requests target it; `main` stays protected as the release branch (plan D5). @Draganoider
 
+ - **docs:** `analysis/max-flow.md`: pseudocode, correctness proofs and running times for
+  Ford-Fulkerson and Edmonds-Karp (issue #15). @aartigapo
+
+
 ### Added
 
 - **report:** the submitted proposal, `report/proposal/proposal.pdf`. @Draganoider
