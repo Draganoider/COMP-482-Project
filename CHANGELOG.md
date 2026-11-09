@@ -74,3 +74,6 @@ What is still to do is in the issue tracker and the [plan](docs/plan.md#status),
 - **docs:** the plan, a summary of the project outline, the llm-wiki (benchmarking method, course
   conventions, findings), proposal and report checklists, and a comparison of the candidate topics
   from the implementation side. @Draganoider
+
+- **docs:** `analysis/min-cut.md`: the max-flow min-cut theorem, finding the cut from the
+  residual graph, the closure and widening facts behind H2 and H3 with counterexamples, and the what-ifs' running time (issue #16). @aartigapo
