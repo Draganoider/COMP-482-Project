@@ -21,6 +21,11 @@ What is still to do is in the issue tracker and the [plan](docs/plan.md#status),
 
 ### Added
 
+- **docs:** `analysis/problem.md`, the precise problem for layer 1 (issue #14): the input
+  network, flows and cuts in Kleinberg and Tardos notation, what counts as a correct answer, why
+  the super-source and super-sink edges are never in a minimum cut, the brute-force checker's
+  pseudocode, the closure and widening what-ifs with a road as one direction (D12), a worked
+  example, and what the model leaves out. @aartigapo
 - **algorithms:** `FlowNetwork` in `src/evac/network.py`, the network layer 1 runs on (D10): roads
   with whole-number capacities and their own ids, parallel roads allowed, paired reverse residual
   edges kept in step by `push`, and `with_super_terminals` joining homes to *s* and shelters to *t*
