@@ -36,6 +36,10 @@ What is still to do is in the issue tracker and the [plan](docs/plan.md#status),
 - **docs:** `analysis/max-flow.md`: pseudocode, correctness proofs and running times for
   Ford-Fulkerson and Edmonds-Karp (issue #15). @aartigapo
 
+- **docs:** `analysis/min-cut.md`: the max-flow min-cut theorem, finding the cut from the
+  residual graph, the closure and widening facts behind H2 and H3 with counterexamples, and the what-ifs' running time (issue #16). @aartigapo
+
+
 ### Changed
 
 - **docs:** `CONTRIBUTING.md` points to the project board and says which card moves are by hand
