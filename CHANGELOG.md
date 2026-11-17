@@ -33,6 +33,9 @@ What is still to do is in the issue tracker and the [plan](docs/plan.md#status),
   `src/evac/generators.py` makes seeded random networks; the tests share a NetworkX conversion
   and 1,000 random networks from `tests/conftest.py`. @Draganoider
 
+- **docs:** `analysis/max-flow.md`: pseudocode, correctness proofs and running times for
+  Ford-Fulkerson and Edmonds-Karp (issue #15). @aartigapo
+
 ### Changed
 
 - **docs:** `CONTRIBUTING.md` points to the project board and says which card moves are by hand
