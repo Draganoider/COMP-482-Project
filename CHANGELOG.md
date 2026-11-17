@@ -28,6 +28,9 @@ What is still to do is in the issue tracker and the [plan](docs/plan.md#status),
   `src/evac/generators.py` makes seeded random networks; the tests share a NetworkX conversion
   and 1,000 random networks from `tests/conftest.py`. @Draganoider
 
+- **docs:** `analysis/max-flow.md`: pseudocode, correctness proofs and running times for
+  Ford-Fulkerson and Edmonds-Karp (issue #15). @aartigapo
+
 ### Changed
 
 - **docs:** `CONTRIBUTING.md` points to the project board and says which card moves are by hand
@@ -49,10 +52,6 @@ What is still to do is in the issue tracker and the [plan](docs/plan.md#status),
   comparison is now a dated snapshot in `docs/research/`. @Draganoider
 - **repo:** `test` is now the default branch, so `Closes #N` closes issues on merge into `test` and
   new pull requests target it; `main` stays protected as the release branch (plan D5). @Draganoider
-
- - **docs:** `analysis/max-flow.md`: pseudocode, correctness proofs and running times for
-  Ford-Fulkerson and Edmonds-Karp (issue #15). @aartigapo
-
 
 ### Added
 

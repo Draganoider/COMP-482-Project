@@ -48,14 +48,14 @@ Both algorithms are the same loop; only the search differs.
 
 **MaxFlow**
 **Input:** the network, *s*, *t*
-**Output:** a maximum flow and its value
+**Output:** a maximum flow *f*, its value *ν*(*f*), and the counters `paths` and `scanned`
 
 ```
 1  set f(e) ← 0 for every edge (r(e) ← c_e, r(reverse of e) ← 0)
-2  paths ← 0
+2  paths ← 0; scanned ← 0
 3  loop:
 4      P ← FindPath(G_f, s, t)
-5      if P is none: return f and ν(f)
+5      if P is none: return f, ν(f), paths, scanned
 6      Augment(f, P)
 7      paths ← paths + 1
 ```
@@ -63,8 +63,9 @@ Both algorithms are the same loop; only the search differs.
 **Ford-Fulkerson** is MaxFlow with a stack in FindPath (DFS). **Edmonds-Karp** is MaxFlow with a
 queue (BFS), so each path it finds is a shortest one in edges.
 
-**Counters for E1:** `paths` counts augmentations, and `scanned` counts residual edges examined.
-These are the two quantities the bounds below count.
+**Counters for E1:** `paths` counts augmentations. `scanned` counts every residual edge examined on
+FindPath's line 5, including edges with residual 0 and the edges of the last search, which finds no
+path. These are the two quantities the bounds below count.
 
 ## 3. Correctness
 
