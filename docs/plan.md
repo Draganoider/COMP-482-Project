@@ -9,7 +9,7 @@ The project's status, scope, people, decisions and open questions. What's graded
 |---|---|---|---|
 | 1. Team formation | Team details | *TBD* | Done 2026-10-23: team of five, roles agreed, repository shared |
 | 2. Proposal | 2–3 page PDF | 2026-10-31 | Done: submitted, [proposal.pdf](../report/proposal/proposal.pdf) |
-| 3. Final report | 8–12 page PDF, repository link, slides (if any) | *TBD* | Next: layer 1 code, analysis and experiments E1–E3 |
+| 3. Final report | 8–12 page PDF, repository link, slides (if any) | *TBD* | In progress: layer 1 analysis done; layer 1 code and experiments E1–E3 next |
 
 ## Scope
 
@@ -18,7 +18,7 @@ outline's bar; each later layer starts only when the one before it works and is 
 
 | Layer | What | Course concepts | Status |
 |---|---|---|---|
-| **1. Main deliverable** | The outline's baseline and stretch goals: a Los Angeles road network (Pacific Palisades, from OpenStreetMap) with whole-number capacities in cars per hour (D10). Max flow gives the cars per hour the roads can move to **shelters** where the roads leave the area (D10); min cut finds the bottleneck roads. Then: the capacity lost when each bottleneck road closes, and the best single road to widen, against brute force | Max flow (Ford-Fulkerson, Edmonds-Karp), max-flow min-cut, brute force | Not started |
+| **1. Main deliverable** | The outline's baseline and stretch goals: a Los Angeles road network (Pacific Palisades, from OpenStreetMap) with whole-number capacities in cars per hour (D10). Max flow gives the cars per hour the roads can move to **shelters** where the roads leave the area (D10); min cut finds the bottleneck roads. Then: the capacity lost when each bottleneck road closes, and the best single road to widen, against brute force | Max flow (Ford-Fulkerson, Edmonds-Karp), max-flow min-cut, brute force | In progress: analysis and the flow network done; max flow, min cut, what-ifs, road data and E1–E3 to do |
 | **2. Our extension** | A fire that closes roads as it spreads (Dijkstra over map cells, with wind). Max flow on a time-expanded network: how many cars reach a shelter before their roads close. Compared with everyone driving their shortest route to the nearest shelter (Dijkstra on the roads) | Dijkstra, max flow, graph modelling | Not started |
 | **3. Presentation** | A map app: start a fire, watch every car (flow decomposition), see the bottlenecks. It only displays what the Python code computes. Built last, cut first if time runs short | Flow decomposition | Not started |
 
