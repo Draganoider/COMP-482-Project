@@ -16,8 +16,9 @@ Let *C* = Σ<sub>*e* ∈ *E*</sub> *c*<sub>*e*</sub>, the total road capacity.
 ## 2. The flow network
 
 Add a super-source *s* and a super-sink *t*, an edge (*s*, *h*) for each home *h*, and an edge
-(*x*, *t*) for each shelter *x*. These terminal edges have capacity *C* + 1. If a road's capacity
-changes, they are reset to the new *C* + 1.
+(*x*, *t*) for each shelter *x*. These terminal edges have capacity *C* + 1 when they are added.
+Whenever a road's capacity change makes *C* reach them, they are raised to the new *C* + 1. They
+are never lowered, so they always exceed *C*.
 
 Below, *V* and *E* mean the sizes of this network: |*V*| + 2 nodes and |*E*| + |*H*| + |*S*| edges.
 
