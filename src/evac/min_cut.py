@@ -1,5 +1,8 @@
 
-"""Find a minimum cut from a completed maximum flow using BFS."""
+"""Find a minimum cut from completed maximum flow using BFS.
+
+Implements proposal section 3 and MinCut from analysis/min-cut.md section 3.
+"""
 
 from collections import deque
 from dataclasses import dataclass
@@ -18,7 +21,11 @@ class MinCut:
 
 
 def min_cut(network: FlowNetwork, result: MaxFlowResult, s: Node) -> MinCut:
-    """Find the minimum cut after a completed maximum-flow calculation."""
+    """Find the minimum cut after a completed maximum-flow calculation.
+
+    The capacity check verifies agreement with the supplied flow value.
+    It does not independently prove that the network has maximum flow.
+    """
 
     if s not in network:
         raise ValueError("source must exist in the network")

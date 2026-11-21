@@ -38,8 +38,13 @@ smaller. ∎
 
 **Correct** by §2: *A* is the set in that proof, so (*A*, *B*) is a minimum cut.
 
-**Running time O(*V* + *E*).** Each node is enqueued once and each residual edge scanned once
+**Running time O(V + E).** Each node is enqueued once and each residual edge scanned once
 (lines 1–6), and line 8 checks each road once.
+
+**Implementation consistency check.** The implementation also checks that the computed
+cut capacity equals the supplied maximum-flow result value. This additional check
+takes O(E) time, so the overall running time remains O(V + E). However, it does not
+independently verify that the supplied flow is maximum or that no augmenting path remains.
 
 **No terminal edge is returned.** (*A*, *B*) is a minimum cut, and `problem.md` §5 shows no minimum
 cut has a terminal edge leaving *A*.

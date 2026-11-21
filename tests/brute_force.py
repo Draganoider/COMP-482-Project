@@ -7,7 +7,9 @@ from evac.network import FlowNetwork, Node
 
 
 def brute_force_min_cut(
-    network: FlowNetwork, s: Node, t: Node
+    network: FlowNetwork,
+    s: Node,
+    t: Node,
 ) -> tuple[int, set[Node]]:
     """Find the minimum cut by checking every possible partition."""
 
@@ -17,7 +19,10 @@ def brute_force_min_cut(
     if s not in network or t not in network:
         raise ValueError("source and sink must exist in the network")
 
-    nodes = [node for node in network.nodes() if node != s and node != t]
+    nodes = [
+        node for node in network.nodes()
+        if node != s and node != t
+    ]
 
     best_capacity = float("inf")
     best_cut: set[Node] = set()

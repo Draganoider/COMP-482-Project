@@ -1,12 +1,15 @@
+
 """Tests for minimum-cut and brute-force implementations."""
+
+import random
 
 import pytest
 from brute_force import brute_force_min_cut
+from conftest import small_random_network
 from evac.edmonds_karp import edmonds_karp
 from evac.ford_fulkerson import ford_fulkerson
 from evac.results import MaxFlowResult
 
-from evac.generators import random_network
 from evac.min_cut import min_cut
 from evac.network import FlowNetwork
 
@@ -33,6 +36,49 @@ def test_brute_force_min_cut():
 
     assert capacity == 12
     assert source_side == {"S", "A"}
+
+
+def test_brute_force_parallel_roads():
+    """Both parallel roads must contribute to the cut."""
+
+    network = FlowNetwork()
+
+    network.add_edge("S", "A", 3)
+    network.add_edge("S", "A", 4)
+    network.add_edge("A", "T", 10)
+
+    capacity, source_side = brute_force_min_cut(network, "S", "T")
+
+    assert capacity == 7
+    assert source_side == {"S"}
+
+
+def test_brute_force_backward_road():
+    """Roads from sink side to source side do not count."""
+
+    network = FlowNetwork()
+
+    network.add_edge("S", "A", 3)
+    network.add_edge("A", "T", 3)
+    network.add_edge("T", "S", 100)
+
+    capacity, _ = brute_force_min_cut(network, "S", "T")
+
+    assert capacity == 3
+
+
+def test_brute_force_no_outgoing_roads():
+    """A source with no outgoing roads has minimum-cut capacity zero."""
+
+    network = FlowNetwork()
+
+    network.add_edge("A", "S", 5)
+    network.add_edge("A", "T", 7)
+
+    capacity, source_side = brute_force_min_cut(network, "S", "T")
+
+    assert capacity == 0
+    assert source_side == {"S"}
 
 
 def test_min_cut_with_completed_flow():
@@ -76,7 +122,7 @@ def test_min_cut_disconnected():
 def test_min_cut_zero_capacity():
     network = FlowNetwork()
 
-    network.add_edge("S", "A", 0)
+    edge_sa = network.add_edge("S", "A", 0)
     network.add_edge("A", "T", 10)
 
     result = make_result(network, 0)
@@ -84,7 +130,7 @@ def test_min_cut_zero_capacity():
 
     assert cut.capacity == 0
     assert cut.reachable == {"S"}
-    assert cut.cut_edges == [0]
+    assert cut.cut_edges == [edge_sa]
 
     brute_capacity, _ = brute_force_min_cut(network, "S", "T")
     assert brute_capacity == 0
@@ -164,18 +210,12 @@ def test_brute_force_invalid_inputs():
     [ford_fulkerson, edmonds_karp],
 )
 def test_min_cut_random_networks(algorithm):
-    """Compare max flow, minimum cut, and brute force on 1000 networks."""
+    """Compare max flow, min cut and brute force on 1000 networks."""
 
     for seed in range(1000):
-        network = random_network(
-            n=6,
-            m=12,
-            max_capacity=20,
-            seed=seed,
-        )
-
+        network = small_random_network(seed)
         source = 0
-        sink = 5
+        sink = network.num_nodes - 1
 
         result = algorithm(network, source, sink)
         cut = min_cut(network, result, source)
@@ -198,3 +238,42 @@ def test_min_cut_random_networks(algorithm):
             not network.is_terminal_edge(edge)
             for edge in cut.cut_edges
         )
+
+
+@pytest.mark.parametrize(
+    "algorithm",
+    [ford_fulkerson, edmonds_karp],
+)
+def test_min_cut_random_super_terminals(algorithm):
+    """Check random networks with artificial source and sink."""
+
+    for seed in range(500):
+        network = small_random_network(seed)
+        nodes = list(network.nodes())
+
+        rng = random.Random(seed)
+        source_node, sink_node = rng.sample(nodes, 2)
+
+        network = network.with_super_terminals(
+            sources=[source_node],
+            sinks=[sink_node],
+        )
+
+        source = "s"
+        sink = "t"
+
+        result = algorithm(network, source, sink)
+        cut = min_cut(network, result, source)
+
+        brute_capacity, _ = brute_force_min_cut(
+            network, source, sink
+        )
+
+        assert result.value == cut.capacity
+        assert cut.capacity == brute_capacity
+        assert sink not in cut.reachable
+
+        assert all(
+            not network.is_terminal_edge(edge)
+            for edge in cut.cut_edges
+        ), f"Terminal edge found for seed {seed}"
