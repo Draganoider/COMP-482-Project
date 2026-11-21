@@ -4,6 +4,9 @@
 import pytest
 from brute_force import brute_force_min_cut
 
+from evac.edmonds_karp import edmonds_karp
+from evac.ford_fulkerson import ford_fulkerson
+from evac.generators import random_network
 from evac.min_cut import min_cut
 from evac.network import FlowNetwork
 from evac.results import MaxFlowResult
@@ -155,3 +158,44 @@ def test_brute_force_invalid_inputs():
 
     with pytest.raises(ValueError, match="must exist"):
         brute_force_min_cut(network, "X", "T")
+
+
+@pytest.mark.parametrize(
+    "algorithm",
+    [ford_fulkerson, edmonds_karp],
+)
+def test_min_cut_random_networks(algorithm):
+    """Compare max flow, minimum cut, and brute force on 1000 networks."""
+
+    for seed in range(1000):
+        network = random_network(
+            n=6,
+            m=12,
+            max_capacity=20,
+            seed=seed,
+        )
+
+        source = 0
+        sink = 5
+
+        result = algorithm(network, source, sink)
+        cut = min_cut(network, result, source)
+
+        brute_capacity, _ = brute_force_min_cut(
+            network, source, sink
+        )
+
+        assert result.value == cut.capacity, (
+            f"Flow and cut mismatch for seed {seed}"
+        )
+
+        assert cut.capacity == brute_capacity, (
+            f"Brute-force mismatch for seed {seed}"
+        )
+
+        assert sink not in cut.reachable
+
+        assert all(
+            not network.is_terminal_edge(edge)
+            for edge in cut.cut_edges
+        )
