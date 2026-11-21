@@ -1,4 +1,9 @@
-"""Results shared by the two max-flow algorithms."""
+"""Results shared by the two max-flow algorithms.
+
+`MaxFlowResult` is what MaxFlow in analysis/max-flow.md section 2 returns: the flow, its value and
+the counters `paths` (here `augmenting_paths`) and `scanned` (here `edges_scanned`) that
+experiment E1 reads.
+"""
 
 from dataclasses import dataclass
 

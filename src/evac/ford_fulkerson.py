@@ -1,4 +1,9 @@
-"""Ford-Fulkerson with DFS augmenting paths."""
+"""Ford-Fulkerson with DFS augmenting paths.
+
+Implements proposal section 3 and the pseudocode in analysis/max-flow.md section 2: MaxFlow, with
+FindPath using a stack (DFS), and Augment. `_find_path` is FindPath and counts `scanned` on its
+line 5; the loop in `ford_fulkerson` is MaxFlow.
+"""
 
 from evac.network import FlowNetwork, Node
 from evac.results import MaxFlowResult

@@ -118,9 +118,18 @@ def test_ford_fulkerson_can_cancel_flow_using_a_reverse_edge():
         edge = network.add_edge(u, v, 1)
         if (u, v) == ("a", "b"):
             bridge = edge
+    pushed = []
+    push = network.push
+
+    def recording_push(e, amount):
+        pushed.append(e)
+        push(e, amount)
+
+    network.push = recording_push
     result = ford_fulkerson(network, "s", "t")
     assert result.value == 2
     assert result.flow[bridge] == 0
+    assert bridge in pushed and bridge ^ 1 in pushed  # pushed along a->b, then undone via b->a
     assert_valid_flow(network, result, "s", "t")
 
 
@@ -156,8 +165,9 @@ def test_ford_fulkerson_deep_10000_node_network():
 
 def test_ford_fulkerson_10000_node_random_network():
     network = random_network(10_000, 20_000, 10, seed=482)
+    expected = nx.maximum_flow_value(to_networkx(network), 0, 9_999)
     result = ford_fulkerson(network, 0, 9_999)
-    assert result.value >= 0
+    assert result.value == expected
     assert_valid_flow(network, result, 0, 9_999)
 
 
