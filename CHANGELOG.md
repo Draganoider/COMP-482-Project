@@ -40,6 +40,8 @@ What is still to do is in the issue tracker and the [plan](docs/plan.md#status),
   by marked edges larger than all road capacity together. `random_network` in
   `src/evac/generators.py` makes seeded random networks; the tests share a NetworkX conversion
   and 1,000 random networks from `tests/conftest.py`. @Draganoider
+- **algorithms:** Ford-Fulkerson max flow using iterative DFS on residual edges, with shared
+  per-edge flow and search counters and correctness tests against NetworkX and small cuts. @nicolebonillaa
 
 ### Changed
 
