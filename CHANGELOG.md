@@ -21,6 +21,9 @@ What is still to do is in the issue tracker and the [plan](docs/plan.md#status),
 
 ### Added
 
+
+- **algorithms:** Implemented minimum cut using BFS on the residual graph in `src/evac/min_cut.py`, with a brute-force checker in `tests/brute_force.py`. Added tests for disconnected networks, zero-capacity roads, artificial super-terminal edges, and 1,000 seeded random networks comparing minimum-cut capacities against Ford-Fulkerson, Edmonds-Karp, and brute force. @msoemoe18
+
 - **docs:** `analysis/problem.md`, the precise problem for layer 1 (issue #14): the input
   network, flows and cuts in Kleinberg and Tardos notation, what counts as a correct answer, why
   the super-source and super-sink edges are never in a minimum cut, the brute-force checker's
