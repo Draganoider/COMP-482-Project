@@ -21,6 +21,9 @@ What is still to do is in the issue tracker and the [plan](docs/plan.md#status),
 
 ### Added
 
+
+- **algorithms:** Implemented minimum cut using BFS on the residual graph in `src/evac/min_cut.py`, with a brute-force checker in `tests/brute_force.py`. Added tests for disconnected networks, zero-capacity roads, artificial super-terminal edges, and 1,000 seeded random networks comparing minimum-cut capacities against Ford-Fulkerson, Edmonds-Karp, and brute force. @msoemoe18
+
 - **algorithms:** `FlowNetwork` in `src/evac/network.py`, the network layer 1 runs on (D10): roads
   with whole-number capacities and their own ids, parallel roads allowed, paired reverse residual
   edges kept in step by `push`, and `with_super_terminals` joining homes to *s* and shelters to *t*
