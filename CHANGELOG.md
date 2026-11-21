@@ -24,6 +24,16 @@ What is still to do is in the issue tracker and the [plan](docs/plan.md#status),
 
 - **algorithms:** Implemented minimum cut using BFS on the residual graph in `src/evac/min_cut.py`, with a brute-force checker in `tests/brute_force.py`. Added tests for disconnected networks, zero-capacity roads, artificial super-terminal edges, and 1,000 seeded random networks comparing minimum-cut capacities against Ford-Fulkerson, Edmonds-Karp, and brute force. @msoemoe18
 
+- **docs:** `analysis/problem.md`, the precise problem for layer 1 (issue #14): the input
+  network, flows and cuts in Kleinberg and Tardos notation, what counts as a correct answer, why
+  the super-source and super-sink edges are never in a minimum cut, the brute-force checker's
+  pseudocode, the closure and widening what-ifs with a road as one direction (D12), a worked
+  example, and what the model leaves out. @aartigapo
+- **docs:** `analysis/max-flow.md`: pseudocode, correctness proofs and running times for
+  Ford-Fulkerson and Edmonds-Karp (issue #15). @aartigapo
+- **docs:** `analysis/min-cut.md`: the max-flow min-cut theorem, finding the cut from the
+  residual graph, the closure and widening facts behind H2 and H3 with counterexamples, and the
+  what-ifs' running time (issue #16). @aartigapo
 - **algorithms:** `FlowNetwork` in `src/evac/network.py`, the network layer 1 runs on (D10): roads
   with whole-number capacities and their own ids, parallel roads allowed, paired reverse residual
   edges kept in step by `push`, and `with_super_terminals` joining homes to *s* and shelters to *t*

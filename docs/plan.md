@@ -9,7 +9,7 @@ The project's status, scope, people, decisions and open questions. What's graded
 |---|---|---|---|
 | 1. Team formation | Team details | *TBD* | Done 2026-10-23: team of five, roles agreed, repository shared |
 | 2. Proposal | 2–3 page PDF | 2026-10-31 | Done: submitted, [proposal.pdf](../report/proposal/proposal.pdf) |
-| 3. Final report | 8–12 page PDF, repository link, slides (if any) | *TBD* | Next: layer 1 code, analysis and experiments E1–E3 |
+| 3. Final report | 8–12 page PDF, repository link, slides (if any) | *TBD* | In progress: layer 1 analysis done; layer 1 code and experiments E1–E3 next |
 
 ## Scope
 
@@ -18,7 +18,7 @@ outline's bar; each later layer starts only when the one before it works and is 
 
 | Layer | What | Course concepts | Status |
 |---|---|---|---|
-| **1. Main deliverable** | The outline's baseline and stretch goals: a Los Angeles road network (Pacific Palisades, from OpenStreetMap) with whole-number capacities in cars per hour (D10). Max flow gives the cars per hour the roads can move to **shelters** where the roads leave the area (D10); min cut finds the bottleneck roads. Then: the capacity lost when each bottleneck road closes, and the best single road to widen, against brute force | Max flow (Ford-Fulkerson, Edmonds-Karp), max-flow min-cut, brute force | Not started |
+| **1. Main deliverable** | The outline's baseline and stretch goals: a Los Angeles road network (Pacific Palisades, from OpenStreetMap) with whole-number capacities in cars per hour (D10). Max flow gives the cars per hour the roads can move to **shelters** where the roads leave the area (D10); min cut finds the bottleneck roads. Then: the capacity lost when each bottleneck road closes, and the best single road to widen, against brute force | Max flow (Ford-Fulkerson, Edmonds-Karp), max-flow min-cut, brute force | In progress: analysis and the flow network done; max flow, min cut, what-ifs, road data and E1–E3 to do |
 | **2. Our extension** | A fire that closes roads as it spreads (Dijkstra over map cells, with wind). Max flow on a time-expanded network: how many cars reach a shelter before their roads close. Compared with everyone driving their shortest route to the nearest shelter (Dijkstra on the roads) | Dijkstra, max flow, graph modelling | Not started |
 | **3. Presentation** | A map app: start a fire, watch every car (flow decomposition), see the bottlenecks. It only displays what the Python code computes. Built last, cut first if time runs short | Flow decomposition | Not started |
 
@@ -67,6 +67,7 @@ old one instead of editing it.
 
 | # | Date | Decision | Why |
 |---|---|---|---|
+| D12 | 2026-11-09 | For the closure and widening what-ifs, **a road is one directed edge**: one direction of one road. A closure sets its capacity to 0; a widening adds one lane's capacity *δ* (from issue #10) to that direction only. Closing both directions of a two-way road at once is not part of layer 1. Defined in [analysis/problem.md](../analysis/problem.md#7-what-ifs) | It matches how `FlowNetwork` names roads (one id per direction), and it keeps the H2 and H3 arguments about single edges of a cut. To be agreed with issue #9 |
 | D11 | 2026-10-31 | The submitted [proposal](../report/proposal/proposal.pdf) commits us to layer 1 with experiments E1–E3; the fire, the shortest-route comparison and the map app (E4, E5, layer 3) are stretch goals | It's what the course now grades us against. Its milestone owners: road data and capacities Juan, problem statement and proofs Abigail, max flow, min cut and what-ifs with tests Yevhen, E1–E3 Juan, report and slides Nicole, stretch goals everyone (dates in Q11) |
 | D10 | 2026-10-31 | The model, as the proposal states it: intersections are nodes, each direction of a road is an edge, with a whole-number capacity in cars per hour from its lanes and road type (Highway Capacity Manual). Shelters sit where the roads leave the area. All homes join one source *s*, all shelters one sink *t*, by edges too large to ever limit the flow, so only real roads can be bottlenecks. Brute force checks every *s*–*t* cut on small graphs | Whole numbers make Ford-Fulkerson terminate; exits as shelters match an evacuation's goal of getting people out; the large *s* and *t* edges keep them out of the min cut |
 | D9 | 2026-10-23 | Folders by deliverable: `analysis/`, `src/`, `tests/`, `experiments/`, `results/`, `data/`, `report/`, `app/`, with `docs/` for how we work | Most of the grade is the report and its evidence, so the writing and the results get first-class places beside the code, and every number traces from `experiments/` to `results/` to `report/` |
