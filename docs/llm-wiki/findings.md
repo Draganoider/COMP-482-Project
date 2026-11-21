@@ -46,5 +46,45 @@ evaluation plan. Whoever answers one moves it into a dated entry under Results.
 ---
 
 ## Results
+### Pacific Palisades Road Network (2026-11-21)
 
-*None yet.*
+**Hypothesis:** We wanted to see if we could download real road data from Pacific Palisades and use it for our wildfire evacuation project.
+
+**Commands:**
+
+```bash
+python experiments/fetch_roads.py
+python experiments/convert_roads.py
+python experiments/create_sample.py
+python experiments/Validate_sample.py
+```
+
+**Commit:** Not committed yet.
+
+**Machine:** Mac, Python 3.11.
+
+**Inputs:**
+- Road data from OpenStreetMap using OSMnx.
+- A 3 km area around Pacific Palisades.
+- Estimated road capacity of 800 cars per hour for each directional lane.
+- A smaller sample with 30 nodes and 55 edges for testing.
+
+**Results:**
+
+We downloaded the Pacific Palisades road network and found 874 nodes and 2,303 directed road edges.
+
+Out of those edges, 1,198 had lane information and 1,105 were missing it. Because of this, we used estimated lane counts for roads that did not have that information.
+
+We also found 813 possible starting nodes near residential roads. Out of those, 811 could reach one of our selected exits, while 2 could not.
+
+We identified La Mesa Drive and Palisades Drive as two possible exit roads because they connect to roads outside our study area.
+
+After assigning capacities, we converted the road network into our team's FlowNetwork format. The conversion worked, and the number of nodes and edges stayed the same.
+
+We then created a smaller network with 30 nodes and 55 edges to test the algorithms.
+
+For the maximum-flow test, NetworkX gave us 1,600 cars per hour. Our team's Edmonds-Karp algorithm also gave us 1,600 cars per hour. It found 1 augmenting path and scanned 117 edges.
+
+**What it shows:** We were able to download real road data, assign capacities, and convert it into the format our project uses. We also tested our team's Edmonds-Karp algorithm and got the same answer as NetworkX for our sample.
+
+**Caveats:** The road capacities are estimates because we do not have exact traffic information for every road. Some roads were also missing lane information. The two exit roads are only possible exits for our model, and we still need to do more testing with larger networks and different road conditions.
