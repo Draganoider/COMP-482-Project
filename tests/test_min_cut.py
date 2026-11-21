@@ -1,15 +1,14 @@
-
 """Tests for minimum-cut and brute-force implementations."""
 
 import pytest
 from brute_force import brute_force_min_cut
-
 from evac.edmonds_karp import edmonds_karp
 from evac.ford_fulkerson import ford_fulkerson
+from evac.results import MaxFlowResult
+
 from evac.generators import random_network
 from evac.min_cut import min_cut
 from evac.network import FlowNetwork
-from evac.results import MaxFlowResult
 
 
 def make_result(network, value):
