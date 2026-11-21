@@ -1,9 +1,11 @@
+
 """Find a minimum cut from a completed maximum flow using BFS."""
 
 from collections import deque
 from dataclasses import dataclass
 
 from evac.network import FlowNetwork, Node
+from evac.results import MaxFlowResult
 
 
 @dataclass
@@ -15,8 +17,14 @@ class MinCut:
     capacity: int
 
 
-def min_cut(network: FlowNetwork, result, s: Node) -> MinCut:
-    """Find the minimum cut after a maximum-flow calculation."""
+def min_cut(network: FlowNetwork, result: MaxFlowResult, s: Node) -> MinCut:
+    """Find the minimum cut after a completed maximum-flow calculation."""
+
+    if s not in network:
+        raise ValueError("source must exist in the network")
+
+    if result is None:
+        raise ValueError("a maximum-flow result is required")
 
     reachable = {s}
     queue = deque([s])
@@ -41,6 +49,12 @@ def min_cut(network: FlowNetwork, result, s: Node) -> MinCut:
         if u in reachable and v not in reachable:
             cut_edges.append(edge)
             capacity += network.capacity(edge)
+
+    if capacity != result.value:
+        raise ValueError(
+            f"minimum-cut capacity {capacity} does not match "
+            f"maximum-flow value {result.value}"
+        )
 
     return MinCut(
         reachable=reachable,
