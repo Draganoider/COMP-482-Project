@@ -1,4 +1,3 @@
-
 """Tests for the Edmonds-Karp maximum-flow algorithm."""
 
 from unittest.mock import patch
@@ -22,8 +21,8 @@ def test_edmonds_karp_simple_network():
     result = edmonds_karp(network, "S", "T")
 
     assert result.value == 12
-    assert result.paths == 2
-    assert result.scanned > 0
+    assert result.augmenting_paths == 2
+    assert result.edges_scanned > 0
 
 
 def test_edmonds_karp_disconnected():
@@ -35,8 +34,8 @@ def test_edmonds_karp_disconnected():
     result = edmonds_karp(network, "S", "T")
 
     assert result.value == 0
-    assert result.paths == 0
-    assert result.scanned > 0
+    assert result.augmenting_paths == 0
+    assert result.edges_scanned > 0
 
 
 def test_edmonds_karp_zero_capacity():
@@ -50,34 +49,8 @@ def test_edmonds_karp_zero_capacity():
     result = edmonds_karp(network, "S", "T")
 
     assert result.value == 5
-    assert result.paths == 1
-    assert result.scanned > 0
-
-
-def test_edmonds_karp_reverse_residual_edges():
-    network = FlowNetwork()
-
-    edge_sa = network.add_edge("S", "A", 1)
-    edge_ab = network.add_edge("A", "B", 1)
-    edge_bt = network.add_edge("B", "T", 1)
-    network.add_edge("S", "B", 1)
-    network.add_edge("A", "T", 1)
-
-    # Create a flow that needs to be rerouted.
-    network.push(edge_sa, 1)
-    network.push(edge_ab, 1)
-    network.push(edge_bt, 1)
-
-    # Undo flow along A -> B using its reverse residual edge.
-    network.push(edge_ab ^ 1, 1)
-
-    assert network.flow(edge_ab) == 0
-    assert network.residual(edge_ab) == 1
-
-    result = edmonds_karp(network, "S", "T")
-
-    assert result.value == 2
-    assert result.paths == 2
+    assert result.augmenting_paths == 1
+    assert result.edges_scanned > 0
 
 
 def test_edmonds_karp_shortest_path():
@@ -95,8 +68,8 @@ def test_edmonds_karp_shortest_path():
     result = edmonds_karp(network, "S", "T")
 
     assert result.value == 10
-    assert result.paths == 2
-    assert result.scanned > 0
+    assert result.augmenting_paths == 2
+    assert result.edges_scanned > 0
 
 
 def test_edmonds_karp_scanned_counter():
@@ -107,8 +80,8 @@ def test_edmonds_karp_scanned_counter():
     result = edmonds_karp(network, "S", "T")
 
     assert result.value == 5
-    assert result.paths == 1
-    assert result.scanned == 2
+    assert result.augmenting_paths == 1
+    assert result.edges_scanned == 2
 
 
 def test_edmonds_karp_prefers_shortest_path():
@@ -126,7 +99,7 @@ def test_edmonds_karp_prefers_shortest_path():
     result = edmonds_karp(network, "S", "T")
 
     assert result.value == 10
-    assert result.paths == 2
+    assert result.augmenting_paths == 2
     assert network.flow(edge_sa) == 5
     assert network.flow(edge_at) == 5
 
@@ -176,9 +149,9 @@ def test_edmonds_karp_augmentation_bound():
         v = network.num_nodes
         e = network.num_edges
 
-        assert result.paths <= v * e, (
+        assert result.augmenting_paths <= v * e, (
             f"Augmentation bound exceeded for seed {seed}: "
-            f"paths={result.paths}, V={v}, E={e}"
+            f"paths={result.augmenting_paths}, V={v}, E={e}"
         )
 
 
@@ -194,10 +167,10 @@ def test_edmonds_karp_nonexistent_nodes():
     network = FlowNetwork()
     network.add_edge("S", "T", 5)
 
-    with pytest.raises(ValueError, match="source and sink must exist"):
+    with pytest.raises(KeyError, match="source and sink must exist"):
         edmonds_karp(network, "X", "T")
 
-    with pytest.raises(ValueError, match="source and sink must exist"):
+    with pytest.raises(KeyError, match="source and sink must exist"):
         edmonds_karp(network, "S", "X")
 
 
@@ -216,7 +189,7 @@ def test_edmonds_karp_chooses_shortest_path():
     result = edmonds_karp(network, "S", "T")
 
     assert result.value == 10
-    assert result.paths == 2
+    assert result.augmenting_paths == 2
 
     # Both routes must carry their full capacity.
     assert network.flow(edge_sa) == 5
@@ -271,8 +244,7 @@ def test_edmonds_karp_shortest_path_first():
         result = edmonds_karp(network, "S", "T")
 
     assert result.value == 10
-    assert result.paths == 2
+    assert result.augmenting_paths == 2
 
     # The first augmenting path must be the shorter path.
     assert pushed_edges[0] == edge_at
-

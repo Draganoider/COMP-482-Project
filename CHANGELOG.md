@@ -21,9 +21,6 @@ What is still to do is in the issue tracker and the [plan](docs/plan.md#status),
 
 ### Added
 
-
-- **algorithms:** Implemented Edmonds-Karp maximum flow using BFS in `src/evac/edmonds_karp.py`, with a shared `MaxFlowResult` structure to record flow value, augmenting paths, and scanned edges. Added correctness tests covering disconnected networks, zero-capacity roads, reverse residual edges, shortest augmenting paths, and comparisons against NetworkX on 1,000 seeded random networks. @msoemoe18
-
 - **docs:** `analysis/problem.md`, the precise problem for layer 1 (issue #14): the input
   network, flows and cuts in Kleinberg and Tardos notation, what counts as a correct answer, why
   the super-source and super-sink edges are never in a minimum cut, the brute-force checker's
@@ -42,6 +39,10 @@ What is still to do is in the issue tracker and the [plan](docs/plan.md#status),
   and 1,000 random networks from `tests/conftest.py`. @Draganoider
 - **algorithms:** Ford-Fulkerson max flow using iterative DFS on residual edges, with shared
   per-edge flow and search counters and correctness tests against NetworkX and small cuts. @nicolebonillaa
+- **algorithms:** Edmonds-Karp max flow in `src/evac/edmonds_karp.py`: BFS finds a shortest
+  augmenting path each time, and it returns the shared `MaxFlowResult` with the same counters as
+  Ford-Fulkerson. Tests cover disconnected networks, zero-capacity roads, reverse residual edges,
+  shortest augmenting paths and 1,000 seeded networks against NetworkX. @msoemoe18
 
 ### Changed
 

@@ -1,10 +1,14 @@
+"""Edmonds-Karp maximum-flow algorithm using BFS.
 
-"""Edmonds-Karp maximum-flow algorithm using BFS."""
+Implements proposal section 3 and the pseudocode in analysis/max-flow.md section 2: MaxFlow, with
+FindPath using a queue (BFS), so each augmenting path is a shortest one, and Augment. `scanned`
+counts every residual edge examined, as on FindPath's line 5.
+"""
 
 from collections import deque
 
-from evac.max_flow_result import MaxFlowResult
 from evac.network import FlowNetwork, Node
+from evac.results import MaxFlowResult
 
 
 def edmonds_karp(network: FlowNetwork, s: Node, t: Node) -> MaxFlowResult:
@@ -14,7 +18,7 @@ def edmonds_karp(network: FlowNetwork, s: Node, t: Node) -> MaxFlowResult:
         raise ValueError("source and sink must be different")
 
     if s not in network or t not in network:
-        raise ValueError("source and sink must exist in the network")
+        raise KeyError("source and sink must exist in the network")
 
     network.reset_flow()
 
@@ -43,8 +47,9 @@ def edmonds_karp(network: FlowNetwork, s: Node, t: Node) -> MaxFlowResult:
         if t not in parent:
             return MaxFlowResult(
                 value=max_flow,
-                paths=paths,
-                scanned=scanned,
+                flow={e: network.flow(e) for e in network.edges()},
+                augmenting_paths=paths,
+                edges_scanned=scanned,
             )
 
         path = []
