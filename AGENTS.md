@@ -76,16 +76,18 @@ it. A measurement goes in [findings.md](docs/llm-wiki/findings.md) instead.
 
 ## Current state
 
-**17 November 2026: Phase 2 (proposal) is submitted; Phase 3 (final report) is under way.** The
+**21 November 2026: Phase 2 (proposal) is submitted; Phase 3 (final report) is under way.** The
 [submitted proposal](report/proposal/proposal.pdf) is what we're graded against: **topic 6, the
 Wildfire Evacuation Planner**, in **Python**. **Layer 1 is the commitment**: max flow
 (Ford-Fulkerson and Edmonds-Karp) for the cars per hour the Pacific Palisades roads can move to
 shelters at the area's exits, min cut for the bottleneck roads, then the closure and widening
 what-ifs, with experiments E1–E3. The fire extension (layer 2) and the map app (layer 3) are
 stretch goals; [docs/plan.md](docs/plan.md#scope) has the scope, and decision D10 the model.
-Layer 1's analysis is written ([analysis/](analysis/README.md): the problem, max flow, min cut),
-and the flow network it runs on is in `src/evac/network.py`. Max flow, min cut, the what-ifs, the
-road data and experiments E1–E3 are not written yet.
+Layer 1's analysis is written ([analysis/](analysis/README.md): the problem, max flow, min cut).
+Its algorithms are in `src/evac/`: the flow network (`network.py`), Ford-Fulkerson
+(`ford_fulkerson.py`), Edmonds-Karp (`edmonds_karp.py`), the min cut (`min_cut.py`) and the
+closure and widening what-ifs (`what_ifs.py`), each checked against NetworkX, and the min cut
+against brute force, in `tests/`. The road data and experiments E1–E3 are not written yet.
 
 What has merged is in [CHANGELOG.md](CHANGELOG.md), and where each phase stands is in the plan's
 [Status](docs/plan.md#status) table. Update this paragraph when a phase starts or finishes, or a
