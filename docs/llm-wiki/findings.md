@@ -88,3 +88,49 @@ For the maximum-flow test, NetworkX gave us 1,600 cars per hour. Our team's Edmo
 **What it shows:** We were able to download real road data, assign capacities, and convert it into the format our project uses. We also tested our team's Edmonds-Karp algorithm and got the same answer as NetworkX for our sample.
 
 **Caveats:** The road capacities are estimates because we do not have exact traffic information for every road. Some roads were also missing lane information. The two exit roads are only possible exits for our model, and we still need to do more testing with larger networks and different road conditions.
+
+### E1: Ford-Fulkerson vs Edmonds-Karp (2026-11-21)
+
+**Hypothesis:** We wanted to compare Ford-Fulkerson and Edmonds-Karp to see which algorithm runs faster when the network gets larger.
+
+**Commands:**
+
+```bash
+python experiments/e1_max_flow.py
+python experiments/plot_e1.py
+```
+
+**Commit:** Not committed yet.
+
+**Machine:** Mac, Python 3.11.
+
+**Inputs:**
+- Randomly generated networks with 30, 100, 300, and 1,000 nodes.
+- Random seed of 42.
+- Maximum random edge capacity of 100.
+- An additional path connecting the source to the sink.
+- Each algorithm was tested five times per network.
+- Pacific Palisades road network with 874 nodes and 2,303 directed edges.
+
+**Results:**
+
+We tested both algorithms using random networks of different sizes. Both algorithms returned the same maximum-flow values for each network.
+
+In the synthetic-network tests, Edmonds-Karp was faster than Ford-Fulkerson in the runs we recorded. As the networks got larger, both algorithms took longer to finish.
+
+We also tested both algorithms on the Pacific Palisades road network.
+
+| Algorithm | Median Time (ms) | Maximum Flow |
+|---|---:|---:|
+| Ford-Fulkerson | 0.5613 | 3200 |
+| Edmonds-Karp | 0.5984 | 3200 |
+
+For the Pacific Palisades test, Ford-Fulkerson was slightly faster. Both algorithms returned the same maximum flow.
+
+**Plot:** `results/e1_max_flow.png`
+
+**CSV Files:** `results/e1_max_flow.csv` and `results/e1_palisades.csv`
+
+**What it shows:** Edmonds-Karp was faster in our synthetic-network tests, while Ford-Fulkerson was slightly faster on the real road network. Both algorithms produced matching maximum-flow results.
+
+**Caveats:** We only used one random seed and four synthetic network sizes. We also added a path to make sure the source could reach the sink. Our road capacities are estimates, and the Pacific Palisades test used only one source and sink. More testing would help us understand how the algorithms perform in other situations.

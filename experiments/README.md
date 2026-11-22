@@ -6,7 +6,7 @@ Experiments Lead.
 
 | # | Layer | Question | Script | Status |
 |---|---|---|---|---|
-| E1 | 1 | Which max-flow algorithm is faster on our inputs, and does each stay within its bound? | `e1_max_flow_algorithms.py` | Planned |
+| E1 | 1 | Which max-flow algorithm is faster on our inputs, and does each stay within its bound? | `e1_max_flow.py` | Planned |
 | E2 | 1 | Which road closures cost the most capacity? | `e2_road_closures.py` | Planned |
 | E3 | 1 | Is the min cut a good guide to which road to widen, against brute force? | `e3_best_road_to_widen.py` | Planned |
 | E4 | 2 | How much does the fire cost, and how does the result relate to layer 1's rate × time? | `e4_fire_cost.py` | Later |
@@ -107,3 +107,34 @@ Of the 813 residential starting-node candidates, 811 could reach at least one of
 These exits are preliminary modeling choices. They have not yet been verified as safe or officially designated wildfire evacuation routes.
 
 For the current network model, residential intersections represent potential evacuation origins, and boundary-crossing roads represent potential exits. Future improvements could incorporate population data, road closures, and official evacuation-route information.
+
+
+## E1: Ford-Fulkerson vs Edmonds-Karp
+
+For this experiment, we compared Ford-Fulkerson and Edmonds-Karp to see how their running times change with different network sizes.
+
+We tested random networks with 30, 100, 300, and 1,000 nodes. We also used the Pacific Palisades road network from Issue #10, which has 874 nodes and 2,303 directed edges.
+
+Each algorithm was tested five times on each network. We recorded the running times, maximum flow, augmenting paths, and edges scanned.
+
+To run the experiment from the repository root:
+
+```bash
+python experiments/e1_max_flow.py
+```
+
+This command runs both algorithms, saves the CSV results, and creates the performance graph.
+
+The files are saved in `results/e1/`:
+
+- `e1_max_flow.csv` — Synthetic-network median results.
+- `e1_max_flow_runs.csv` — Individual synthetic-network measurements.
+- `e1_palisades.csv` — Pacific Palisades median results.
+- `e1_palisades_runs.csv` — Individual road-network measurements.
+- `e1_max_flow.png` — Log-log performance graph.
+
+The synthetic networks use random seed 42, with an additional path from the source to the sink to make sure flow is possible.
+
+The Pacific Palisades experiment uses the downloaded GraphML road dataset from Issue #10. Both algorithms must be available in the project before running this experiment.
+
+In our tests, Edmonds-Karp was faster on the synthetic networks, while Ford-Fulkerson was slightly faster on the Pacific Palisades network.
