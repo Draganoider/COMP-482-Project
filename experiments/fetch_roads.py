@@ -1,6 +1,8 @@
-import osmnx as ox
-import networkx as nx
+from collections import Counter
 from pathlib import Path
+
+import networkx as nx
+import osmnx as ox
 
 # Location we want to study
 place = "Pacific Palisades, Los Angeles, California, USA"
@@ -22,14 +24,14 @@ print("Number of edges:", len(G.edges))
 
 print("\nSample road attributes:")
 
-for u, v, key, data in list(G.edges(keys=True, data=True))[:5]:
+for _u, _v, _key, data in list(G.edges(keys=True, data=True))[:5]:
     print(data)
 
 # Count roads with and without lane information
 with_lanes = 0
 without_lanes = 0
 
-for u, v, key, data in G.edges(keys=True, data=True):
+for _u, _v, _key, data in G.edges(keys=True, data=True):
     if "lanes" in data:
         with_lanes += 1
     else:
@@ -40,12 +42,11 @@ print("Road edges with lane data:", with_lanes)
 print("Road edges missing lane data:", without_lanes)
 
 
-from collections import Counter
 
 # Count road types that are missing lane information
 missing_by_type = Counter()
 
-for u, v, key, data in G.edges(keys=True, data=True):
+for _u, _v, _key, data in G.edges(keys=True, data=True):
     if "lanes" not in data:
         road_type = data.get("highway", "unknown")
 
@@ -59,12 +60,11 @@ print("\nMISSING LANES BY ROAD TYPE")
 for road_type, count in missing_by_type.most_common():
     print(road_type, ":", count)
 # Inspect lane counts and road directions
-from collections import Counter
 
 lane_examples = Counter()
 oneway_counts = Counter()
 
-for u, v, key, data in G.edges(keys=True, data=True):
+for _u, _v, _key, data in G.edges(keys=True, data=True):
     road_type = data.get("highway", "unknown")
     lanes = data.get("lanes", "missing")
     oneway = data.get("oneway", False)
@@ -83,7 +83,7 @@ for direction, count in oneway_counts.items():
 # Check lane counts for residential roads
 residential_lanes = Counter()
 
-for u, v, key, data in G.edges(keys=True, data=True):
+for _u, _v, _key, data in G.edges(keys=True, data=True):
     if data.get("highway") == "residential":
         lanes = str(data.get("lanes", "missing"))
         residential_lanes[lanes] += 1
@@ -159,7 +159,7 @@ print("One-way road:", assign_capacity(road2))
 print("Missing lane data:", assign_capacity(road3))
 
 # Assign estimated capacity to every road edge
-for u, v, key, data in G.edges(keys=True, data=True):
+for _u, _v, _key, data in G.edges(keys=True, data=True):
     data["capacity"] = assign_capacity(data)
 
 # Verify that every edge has a positive integer capacity
@@ -238,7 +238,7 @@ major_types = {
 
 exit_road_candidates = []
 
-for u, v, key, data in G.edges(keys=True, data=True):
+for _u, v, _key, data in G.edges(keys=True, data=True):
     road_type = data.get("highway", "")
 
     if isinstance(road_type, list):
@@ -319,7 +319,7 @@ for node, distance in boundary_terminal_nodes[:10]:
 
 print("\nBOUNDARY TERMINAL ROAD DETAILS")
 
-for node, distance in boundary_terminal_nodes:
+for node, _distance in boundary_terminal_nodes:
     incoming = list(G.in_edges(node, keys=True, data=True))
     outgoing = list(G.out_edges(node, keys=True, data=True))
 
@@ -344,7 +344,7 @@ for node, distance in boundary_terminal_nodes:
 # Check terminal nodes that allow outgoing traffic
 outgoing_terminals = []
 
-for node, distance in boundary_terminal_nodes:
+for node, _distance in boundary_terminal_nodes:
     incoming_count = G.in_degree(node)
     outgoing_count = G.out_degree(node)
 
@@ -394,7 +394,7 @@ for inside_node, outside_node in confirmed_crossings:
     road_edges = larger_G.get_edge_data(inside_node, outside_node)
 
     if road_edges:
-        for key, data in road_edges.items():
+        for _key, data in road_edges.items():
             print(
                 "Road:", data.get("name", "Unnamed"),
                 "| Type:", data.get("highway", "Unknown"),
@@ -431,7 +431,7 @@ for inside_node, outside_node in confirmed_crossings:
 # Identify intersections connected to residential roads
 residential_start_nodes = set()
 
-for u, v, key, data in G.edges(keys=True, data=True):
+for _u, _v, _key, data in G.edges(keys=True, data=True):
     road_type = data.get("highway", "")
 
     if isinstance(road_type, list):

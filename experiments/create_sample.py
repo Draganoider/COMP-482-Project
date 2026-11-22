@@ -1,6 +1,7 @@
+from pathlib import Path
+
 import networkx as nx
 import osmnx as ox
-from pathlib import Path
 
 # Load the existing road network
 G = ox.load_graphml("data/raw/palisades_roads.graphml")

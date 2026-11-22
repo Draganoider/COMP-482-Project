@@ -1,8 +1,9 @@
 
-import osmnx as ox
 import networkx as nx
+import osmnx as ox
 
 from evac.network import FlowNetwork
+
 try:
     from evac.edmonds_karp import edmonds_karp
 except ImportError:
@@ -14,7 +15,7 @@ G = ox.load_graphml("data/palisades_sample.graphml")
 # Convert MultiDiGraph into DiGraph for max-flow testing
 flow_graph = nx.DiGraph()
 
-for u, v, key, data in G.edges(keys=True, data=True):
+for u, v, _key, data in G.edges(keys=True, data=True):
     capacity = int(data["capacity"])
 
     # Combine capacities of parallel roads
@@ -55,7 +56,7 @@ team_network = FlowNetwork()
 for node in G.nodes:
     team_network.add_node(node)
 
-for u, v, key, data in G.edges(keys=True, data=True):
+for u, v, _key, data in G.edges(keys=True, data=True):
     team_network.add_edge(u, v, int(data["capacity"]))
 
 # Run the team's Edmonds-Karp algorithm

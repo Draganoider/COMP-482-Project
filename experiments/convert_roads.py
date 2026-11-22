@@ -3,7 +3,6 @@ import osmnx as ox
 
 from evac.network import FlowNetwork
 
-
 # Load the road network we already downloaded
 G = ox.load_graphml("data/raw/palisades_roads.graphml")
 
@@ -58,7 +57,7 @@ candidate_exits = [271821708, 14109380556]
 # Select 10 residential intersections for the initial test
 residential_nodes = set()
 
-for u, v, key, data in G.edges(keys=True, data=True):
+for u, v, _key, data in G.edges(keys=True, data=True):
     road_type = data.get("highway", "")
 
     if isinstance(road_type, list):
