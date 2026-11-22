@@ -319,7 +319,7 @@ for node, distance in boundary_terminal_nodes[:10]:
 
 print("\nBOUNDARY TERMINAL ROAD DETAILS")
 
-for node, _distance in boundary_terminal_nodes:
+for node, distance in boundary_terminal_nodes:
     incoming = list(G.in_edges(node, keys=True, data=True))
     outgoing = list(G.out_edges(node, keys=True, data=True))
 
@@ -431,7 +431,7 @@ for inside_node, outside_node in confirmed_crossings:
 # Identify intersections connected to residential roads
 residential_start_nodes = set()
 
-for _u, _v, _key, data in G.edges(keys=True, data=True):
+for u, v, _key, data in G.edges(keys=True, data=True):
     road_type = data.get("highway", "")
 
     if isinstance(road_type, list):
