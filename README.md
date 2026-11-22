@@ -47,10 +47,12 @@ You're on `test`, the default branch, where all work happens. `main` holds what 
 
 Every experiment runs with one command and writes its tables and plots to `results/`.
 
-|
+
 | Experiment | What it shows | Command | Writes |
 |---|---|---|---|
-| E1: Maximum Flow | Compares Ford-Fulkerson and Edmonds-Karp using random networks and Pacific Palisades roads | `python experiments/e1_max_flow.py` | `results/e1/` |
+| E1: Maximum Flow | Compares Ford-Fulkerson and Edmonds-Karp on random networks and Pacific Palisades roads | `python experiments/e1_max_flow.py` | `results/e1/` |
+| E2: Road Closures | Tests which road closures reduce maximum flow the most and compares them with the minimum cut | `python experiments/e2_road_closures.py` | `results/e2/` |
+
 
 
 ## Tests

@@ -7,7 +7,7 @@ Experiments Lead.
 | # | Layer | Question | Script | Status |
 |---|---|---|---|---|
 | E1 | 1 | Which max-flow algorithm is faster on our inputs, and does each stay within its bound? | `e1_max_flow.py` | Planned |
-| E2 | 1 | Which road closures cost the most capacity? | `e2_road_closures.py` | Planned |
+| E2 | 1 | Which road closures cost the most capacity? | `e2_road_closures.py` | Implemented — preliminary results|
 | E3 | 1 | Is the min cut a good guide to which road to widen, against brute force? | `e3_best_road_to_widen.py` | Planned |
 | E4 | 2 | How much does the fire cost, and how does the result relate to layer 1's rate × time? | `e4_fire_cost.py` | Later |
 | E5 | 2 | How much better is the max-flow plan than everyone taking their shortest route? | `e5_shortest_routes.py` | Later |
@@ -138,3 +138,26 @@ The synthetic networks use random seed 42, with an additional path from the sour
 The Pacific Palisades experiment uses the downloaded GraphML road dataset from Issue #10. Both algorithms must be available in the project before running this experiment.
 
 In our tests, Edmonds-Karp was faster on the synthetic networks, while Ford-Fulkerson was slightly faster on the Pacific Palisades network.
+
+## E2: Road Closure Analysis
+
+For this experiment, we wanted to see which roads would cause the biggest decrease in evacuation capacity if they were closed.
+
+We used the Pacific Palisades road network with 874 nodes and 2,303 directed edges. We calculated the original maximum flow, then closed each road individually and calculated the new maximum flow.
+
+To run the experiment from the project folder:
+
+```bash
+python experiments/e2_road_closures.py
+```
+
+The program automatically saves two files in `results/e2/`:
+
+- `e2_road_closures.csv` — Results for all 2,303 road closures.
+- `e2_top_closures.png` — Graph showing the 10 closures with the greatest capacity loss.
+
+The original maximum flow was 3,200 cars per hour. The largest individual road closures reduced the maximum flow by 1,600 cars per hour.
+
+We also compared these roads with the original minimum cut. Some roads outside the minimum cut caused the same capacity loss as roads inside it.
+
+These results are based on estimated road capacities and one source-sink pair. Each directed edge was closed separately, so the results do not represent every possible real-world road closure.
