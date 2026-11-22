@@ -68,15 +68,17 @@ def test_widening_gains():
     assert gains[edge_bt] == 0
 
 
-
 @pytest.mark.parametrize("solver", [ford_fulkerson, edmonds_karp])
 def test_what_ifs_preserve_original_network(solver):
     """Check that real solvers do not change the original network or flow."""
 
-    network, *_ = make_network()
+    network, edge_sa, edge_at, *_ = make_network()
 
-    initial_result = ford_fulkerson(network, "S", "T")
-    assert initial_result.value == 12
+    # A partial flow, which no solver would leave behind: if a what-if solved on this network
+    # instead of a copy, the solver would replace it with a maximum flow and the checks below fail.
+    # (Starting from a solved network can't catch that: re-solving gives the same flow back.)
+    network.push(edge_sa, 3)
+    network.push(edge_at, 3)
 
     original_capacities = {
         edge: network.capacity(edge)
