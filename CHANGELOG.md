@@ -47,6 +47,10 @@ What is still to do is in the issue tracker and the [plan](docs/plan.md#status),
   max flow, with a brute-force checker in `tests/brute_force.py`. Tests cover disconnected
   networks, zero-capacity roads, super-terminal edges, and 1,000 seeded random networks comparing
   the cut with Ford-Fulkerson, Edmonds-Karp and brute force. @msoemoe18
+- **algorithms:** Implemented road-closure and road-widening what-if calculations in
+  `src/evac/what_ifs.py`, using independent network copies and maximum-flow re-solves. Added
+  input validation, hand-checked H2 and H3 examples, tests with Ford-Fulkerson and Edmonds-Karp,
+  and randomized comparisons against NetworkX. @msoemoe18
 
 ### Changed
 
