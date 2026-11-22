@@ -1,0 +1,5 @@
+network,road_id,baseline_flow,widening_gain,in_min_cut
+Equal bottlenecks,0,100,0,True
+Equal bottlenecks,2,100,0,False
+Single bottleneck,0,100,800,True
+Single bottleneck,2,100,0,False

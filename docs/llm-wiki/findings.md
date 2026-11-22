@@ -183,3 +183,48 @@ Four road edges caused a capacity loss of 1,600 cars per hour. Two were part of 
 **What it shows:** Some roads outside the original minimum cut can still cause a large decrease in maximum flow when closed. This means checking only the original minimum cut is not enough to identify every road that could affect evacuation capacity.
 
 **Caveats:** The road capacities are estimates, and we only used one source and sink. Each directed edge was tested separately, so closing a two-way physical street could have a different effect. The results show how the model behaves, not necessarily what would happen during a real wildfire evacuation.
+
+### E3: Best Road to Widen (2026-11-22)
+
+**Hypothesis:** We wanted to find out which road would improve evacuation capacity the most if we added one lane. We also wanted to see whether roads in the minimum cut were always the best ones to widen.
+
+**Command:**
+
+```bash
+python experiments/e3_best_road_to_widen.py
+```
+
+**Commit:** Not committed yet.
+
+**Machine:** Mac, Python 3.11.
+
+**Inputs:**
+- Pacific Palisades road network with 874 nodes and 2,303 directed edges.
+- Source node: 123082625
+- Sink node: 13418556508
+- Each directed road was tested with an additional 800 cars/hour of capacity.
+- Two small synthetic networks were used to test different bottlenecks.
+
+**Results:**
+
+The original maximum flow for the Pacific Palisades network was 3,200 cars per hour. We tested widening all 2,303 directed roads individually by adding 800 cars per hour to each road.
+
+None of the roads increased the maximum flow. This suggests that widening only one road is not enough to improve the flow for our selected source and sink.
+
+We also tested two smaller networks to understand why.
+
+| Network | Original Maximum Flow | Best Widening Gain |
+|---|---:|---:|
+| Pacific Palisades | 3200 | 0 |
+| Equal bottlenecks | 100 | 0 |
+| Single bottleneck | 100 | 800 |
+
+In the equal-bottleneck network, widening either road did not improve maximum flow because the other road still limited it.
+
+In the single-bottleneck network, widening the road with capacity 100 increased maximum flow from 100 to 900. Widening the other road did not help.
+
+**Plot:** `results/e3/e3_widening_comparison.png`
+
+**CSV Files:** `results/e3/e3_widening_gains.csv` and `results/e3/e3_synthetic.csv`
+
+**What it shows:** A road being part of the minimum cut does not always mean widening it will improve maximum flow. Sometimes other bottlenecks prevent

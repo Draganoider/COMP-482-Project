@@ -6,9 +6,9 @@ Experiments Lead.
 
 | # | Layer | Question | Script | Status |
 |---|---|---|---|---|
-| E1 | 1 | Which max-flow algorithm is faster on our inputs, and does each stay within its bound? | `e1_max_flow.py` | Planned |
+| E1 | 1 | Which max-flow algorithm is faster on our inputs, and does each stay within its bound? | `e1_max_flow.py` | Implemented — preliminary results |
 | E2 | 1 | Which road closures cost the most capacity? | `e2_road_closures.py` | Implemented — preliminary results|
-| E3 | 1 | Is the min cut a good guide to which road to widen, against brute force? | `e3_best_road_to_widen.py` | Planned |
+| E3 | 1 | Is the min cut a good guide to which road to widen, against brute force? | `e3_best_road_to_widen.py` | Implemented — preliminary results |
 | E4 | 2 | How much does the fire cost, and how does the result relate to layer 1's rate × time? | `e4_fire_cost.py` | Later |
 | E5 | 2 | How much better is the max-flow plan than everyone taking their shortest route? | `e5_shortest_routes.py` | Later |
 
@@ -108,7 +108,6 @@ These exits are preliminary modeling choices. They have not yet been verified as
 
 For the current network model, residential intersections represent potential evacuation origins, and boundary-crossing roads represent potential exits. Future improvements could incorporate population data, road closures, and official evacuation-route information.
 
-
 ## E1: Ford-Fulkerson vs Edmonds-Karp
 
 For this experiment, we compared Ford-Fulkerson and Edmonds-Karp to see how their running times change with different network sizes.
@@ -161,3 +160,29 @@ The original maximum flow was 3,200 cars per hour. The largest individual road c
 We also compared these roads with the original minimum cut. Some roads outside the minimum cut caused the same capacity loss as roads inside it.
 
 These results are based on estimated road capacities and one source-sink pair. Each directed edge was closed separately, so the results do not represent every possible real-world road closure.
+
+## E3: Best Road to Widen
+
+For this experiment, we wanted to find which road would improve evacuation capacity the most if we added one lane.
+
+We tested the Pacific Palisades road network with 874 nodes and 2,303 directed edges. Each road was widened individually by adding 800 cars per hour to its capacity.
+
+We also compared the results with the original minimum cut to see if minimum-cut roads were the best ones to widen.
+
+To run the experiment from the project folder:
+
+```bash
+python experiments/e3_best_road_to_widen.py
+```
+
+The program saves three files in `results/e3/`:
+
+- `e3_widening_gains.csv` — Results for all 2,303 directed roads.
+- `e3_synthetic.csv` — Results from two small test networks.
+- `e3_widening_comparison.png` — Graph comparing the synthetic networks.
+
+For the Pacific Palisades network, none of the individual road widenings increased maximum flow.
+
+In the synthetic tests, widening a single bottleneck improved maximum flow by 800 cars per hour. However, widening one of two equal bottlenecks did not improve it.
+
+These results show that widening a minimum-cut road does not always increase maximum flow. Other bottlenecks may still limit the network.
