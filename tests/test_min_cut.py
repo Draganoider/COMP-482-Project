@@ -6,9 +6,9 @@ import random
 import pytest
 from brute_force import brute_force_min_cut
 from conftest import small_random_network
-from evac.ford_fulkerson import ford_fulkerson
 
 from evac.edmonds_karp import edmonds_karp
+from evac.ford_fulkerson import ford_fulkerson
 from evac.min_cut import min_cut
 from evac.network import FlowNetwork
 from evac.results import MaxFlowResult
