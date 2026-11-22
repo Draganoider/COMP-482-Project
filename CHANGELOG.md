@@ -39,6 +39,16 @@ What is still to do is in the issue tracker and the [plan](docs/plan.md#status),
   by marked edges larger than all road capacity together. `random_network` in
   `src/evac/generators.py` makes seeded random networks; the tests share a NetworkX conversion
   and 1,000 random networks from `tests/conftest.py`. @Draganoider
+- **algorithms:** Ford-Fulkerson max flow using iterative DFS on residual edges, with shared
+  per-edge flow and search counters and correctness tests against NetworkX and small cuts. @nicolebonillaa
+- **algorithms:** Edmonds-Karp max flow in `src/evac/edmonds_karp.py`: BFS finds a shortest
+  augmenting path each time, and it returns the shared `MaxFlowResult` with the same counters as
+  Ford-Fulkerson. Tests cover disconnected networks, zero-capacity roads, reverse residual edges,
+  shortest augmenting paths and 1,000 seeded networks against NetworkX. @msoemoe18
+- **algorithms:** Minimum cut in `src/evac/min_cut.py`, found by a BFS on the residual graph after
+  max flow, with a brute-force checker in `tests/brute_force.py`. Tests cover disconnected
+  networks, zero-capacity roads, super-terminal edges, and 1,000 seeded random networks comparing
+  the cut with Ford-Fulkerson, Edmonds-Karp and brute force. @msoemoe18
 
 ### Changed
 
