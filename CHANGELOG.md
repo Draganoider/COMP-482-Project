@@ -21,14 +21,6 @@ What is still to do is in the issue tracker and the [plan](docs/plan.md#status),
 
 ### Added
 
-- **algorithms:** Implemented minimum cut using BFS on the residual graph in
-  `src/evac/min_cut.py`, with a brute-force checker in `tests/brute_force.py`.
-  Added tests for disconnected networks, zero-capacity roads, artificial
-  super-terminal edges, and 1,000 seeded random networks comparing minimum-cut
-  capacities against Ford-Fulkerson, Edmonds-Karp, and brute force. @msoemoe18
-
-- **algorithms:** Implemented minimum cut using BFS on the residual graph in `src/evac/min_cut.py`, with a brute-force checker in `tests/brute_force.py`. Added tests for disconnected networks, zero-capacity roads, artificial super-terminal edges, and 1,000 seeded random networks comparing minimum-cut capacities against Ford-Fulkerson, Edmonds-Karp, and brute force. @msoemoe18
-
 - **docs:** `analysis/problem.md`, the precise problem for layer 1 (issue #14): the input
   network, flows and cuts in Kleinberg and Tardos notation, what counts as a correct answer, why
   the super-source and super-sink edges are never in a minimum cut, the brute-force checker's
@@ -51,6 +43,10 @@ What is still to do is in the issue tracker and the [plan](docs/plan.md#status),
   augmenting path each time, and it returns the shared `MaxFlowResult` with the same counters as
   Ford-Fulkerson. Tests cover disconnected networks, zero-capacity roads, reverse residual edges,
   shortest augmenting paths and 1,000 seeded networks against NetworkX. @msoemoe18
+- **algorithms:** Minimum cut in `src/evac/min_cut.py`, found by a BFS on the residual graph after
+  max flow, with a brute-force checker in `tests/brute_force.py`. Tests cover disconnected
+  networks, zero-capacity roads, super-terminal edges, and 1,000 seeded random networks comparing
+  the cut with Ford-Fulkerson, Edmonds-Karp and brute force. @msoemoe18
 
 ### Changed
 
