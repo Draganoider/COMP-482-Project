@@ -1,5 +1,9 @@
 
-"""Road-closure and road-widening what-if experiments."""
+"""Road-closure and road-widening what-if experiments.
+
+Implements the closure and widening what-ifs in proposal sections 2-3
+and analysis/min-cut.md sections 4-5 (plan decision D12).
+"""
 
 from collections.abc import Callable
 from operator import index
@@ -27,6 +31,9 @@ def closure_losses(
 
     Each road is tested independently on a copy of the original network.
     The original network and its flow remain unchanged.
+
+    The solver runs once for the baseline and once per directed road,
+    for a total of 1 + the number of roads re-solves.
     """
 
     baseline_network = network.copy()
@@ -57,6 +64,9 @@ def widening_gains(
 
     Each road receives the same additional capacity independently.
     The original network and its flow remain unchanged.
+
+    The solver runs once for the baseline and once per directed road,
+    for a total of 1 + the number of roads re-solves.
     """
 
     if isinstance(added_capacity, bool):

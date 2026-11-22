@@ -5,7 +5,10 @@ from types import SimpleNamespace
 
 import networkx as nx
 import pytest
+from conftest import small_random_network, to_networkx
 
+from evac.edmonds_karp import edmonds_karp
+from evac.ford_fulkerson import ford_fulkerson
 from evac.generators import random_network
 from evac.network import FlowNetwork
 from evac.what_ifs import closure_losses, widening_gains
@@ -65,24 +68,36 @@ def test_widening_gains():
     assert gains[edge_bt] == 0
 
 
-def test_what_ifs_preserve_original_network():
+
+@pytest.mark.parametrize("solver", [ford_fulkerson, edmonds_karp])
+def test_what_ifs_preserve_original_network(solver):
+    """Check that real solvers do not change the original network or flow."""
+
     network, *_ = make_network()
 
-    original_capacities = {
-        edge: network.capacity(edge) for edge in network.edges()
-    }
+    initial_result = ford_fulkerson(network, "S", "T")
+    assert initial_result.value == 12
 
+    original_capacities = {
+        edge: network.capacity(edge)
+        for edge in network.edges()
+    }
     original_residuals = {
         edge: network.residual(edge)
         for road in network.edges()
         for edge in (road, road ^ 1)
     }
+    original_flows = {
+        edge: network.flow(edge)
+        for edge in network.edges()
+    }
 
-    closure_losses(network, "S", "T", networkx_solver)
-    widening_gains(network, "S", "T", networkx_solver, 5)
+    closure_losses(network, "S", "T", solver)
+    widening_gains(network, "S", "T", solver, 5)
 
     assert {
-        edge: network.capacity(edge) for edge in network.edges()
+        edge: network.capacity(edge)
+        for edge in network.edges()
     } == original_capacities
 
     assert {
@@ -90,6 +105,11 @@ def test_what_ifs_preserve_original_network():
         for road in network.edges()
         for edge in (road, road ^ 1)
     } == original_residuals
+
+    assert {
+        edge: network.flow(edge)
+        for edge in network.edges()
+    } == original_flows
 
 
 def test_what_ifs_monotonicity():
@@ -247,3 +267,91 @@ def test_what_ifs_against_networkx(seed):
 
         assert losses[edge] >= 0
         assert gains[edge] >= 0
+
+
+@pytest.mark.parametrize("solver", [ford_fulkerson, edmonds_karp])
+def test_h2_closure_outside_original_min_cut(solver):
+    """Closing a road outside the original minimum cut can reduce flow."""
+
+    network = FlowNetwork()
+
+    network.add_edge("h", "u", 5)
+    edge_ux = network.add_edge("u", "x", 10)
+    network.add_edge("h", "w", 5)
+    network.add_edge("w", "x", 10)
+
+    baseline = solver(network.copy(), "h", "x")
+    losses = closure_losses(network, "h", "x", solver)
+
+    assert baseline.value == 10
+    assert losses[edge_ux] == 5
+
+
+@pytest.mark.parametrize("solver", [ford_fulkerson, edmonds_karp])
+def test_h3_widening_one_min_cut_road(solver):
+    """Widening one of two minimum-cut roads gives no gain."""
+
+    network = FlowNetwork()
+
+    edge_hu = network.add_edge("h", "u", 5)
+    network.add_edge("u", "x", 5)
+
+    baseline = solver(network.copy(), "h", "x")
+    gains = widening_gains(network, "h", "x", solver, 5)
+
+    assert baseline.value == 5
+    assert gains[edge_hu] == 0
+
+
+@pytest.mark.parametrize("solver", [ford_fulkerson, edmonds_karp])
+def test_what_ifs_with_real_solvers_against_networkx(solver):
+    """Compare real solver results against independent NetworkX re-solves."""
+
+    for seed in range(100):
+        network = small_random_network(seed, max_nodes=10)
+
+        source = 0
+        sink = network.num_nodes - 1
+        added_capacity = 5
+
+        baseline = nx.maximum_flow_value(
+            to_networkx(network), source, sink
+        )
+
+        losses = closure_losses(network, source, sink, solver)
+        gains = widening_gains(
+            network, source, sink, solver, added_capacity
+        )
+
+        assert set(losses) == set(network.roads())
+        assert set(gains) == set(network.roads())
+
+        for edge in network.roads():
+            closed = network.copy()
+            closed.reset_flow()
+            closed.set_capacity(edge, 0)
+
+            expected_closed = nx.maximum_flow_value(
+                to_networkx(closed), source, sink
+            )
+
+            widened = network.copy()
+            widened.reset_flow()
+            widened.set_capacity(
+                edge,
+                widened.capacity(edge) + added_capacity,
+            )
+
+            expected_widened = nx.maximum_flow_value(
+                to_networkx(widened), source, sink
+            )
+
+            assert losses[edge] == baseline - expected_closed, (
+                f"Closure mismatch: seed={seed}, edge={edge}"
+            )
+            assert gains[edge] == expected_widened - baseline, (
+                f"Widening mismatch: seed={seed}, edge={edge}"
+            )
+
+            assert losses[edge] >= 0
+            assert gains[edge] >= 0

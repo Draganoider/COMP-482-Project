@@ -21,7 +21,7 @@ What is still to do is in the issue tracker and the [plan](docs/plan.md#status),
 
 ### Added
 
-- **algorithms:** Implemented road-closure and road-widening what-if calculations in `src/evac/what_ifs.py`, including independent network copies, maximum-flow comparisons, input validation, and tests covering parallel roads, disconnected networks, super-terminal edges, and 100 seeded random networks against NetworkX. @msoemoe18
+- **algorithms:** Implemented road-closure and road-widening what-if calculations in `src/evac/what_ifs.py`, using independent network copies and maximum-flow re-solves. Added input validation, hand-checked H2 and H3 examples, tests with Ford-Fulkerson and Edmonds-Karp, and randomized comparisons against NetworkX. @msoemoe18
 
 - **docs:** `analysis/problem.md`, the precise problem for layer 1 (issue #14): the input
   network, flows and cuts in Kleinberg and Tardos notation, what counts as a correct answer, why
