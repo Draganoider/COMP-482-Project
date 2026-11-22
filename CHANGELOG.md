@@ -51,6 +51,11 @@ What is still to do is in the issue tracker and the [plan](docs/plan.md#status),
   `src/evac/what_ifs.py`, using independent network copies and maximum-flow re-solves. Added
   input validation, hand-checked H2 and H3 examples, tests with Ford-Fulkerson and Edmonds-Karp,
   and randomized comparisons against NetworkX. @msoemoe18
+- **report:** drafted the Results and Discussion section for the final report,
+  covering the Pacific Palisades dataset, E1 algorithm comparisons, E2 road
+  closures, E3 road widening, hypotheses H1–H3, and model limitations.
+  Updated `docs/llm-wiki/findings.md` with verified experiment results.
+  @juanrazo
 
 ### Changed
 

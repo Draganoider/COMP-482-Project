@@ -16,9 +16,9 @@ evaluation plan. Whoever answers one moves it into a dated entry under Results.
 
 | # | Hypothesis (from the analysis) | Experiment | Status |
 |---|---|---|---|
-| H1 | Edmonds-Karp's augmenting-path count stays within its O(VE) bound and its time within O(VE²); Ford-Fulkerson's depends on the flow value, so it can win when flows are small | E1 | Open |
-| H2 | Closing a road on a minimum cut always lowers the max flow. Roads on no minimum cut can lower it too (closing one can create a new, smaller cut), so the cut alone can't rank closures and E2 re-solves for every road | E2 | Open |
-| H3 | Widening a min-cut road is not always the best single road to widen: with several minimum cuts it may change nothing, which brute force will show | E3 | Open |
+| H1 | Edmonds-Karp's augmenting-path count stays within its O(VE) bound and its time within O(VE²); Ford-Fulkerson's depends on the flow value, so it can win when flows are small | E1 | Partly supported |
+| H2 | Closing a road on a minimum cut always lowers the max flow. Roads on no minimum cut can lower it too (closing one can create a new, smaller cut), so the cut alone can't rank closures and E2 re-solves for every road | E2 | Partly supported |
+| H3 | Widening a min-cut road is not always the best single road to widen: with several minimum cuts it may change nothing, which brute force will show | E3 | Supported |
 | H4 | With no fire, the cars out within *T* never exceed layer 1's rate × *T* or the number of households that can reach a shelter at all, and approach the smaller of the two as *T* grows (Ford and Fulkerson's temporally repeated flows give the exact form, with the routes' travel times). Road closures and a later evacuation order push it lower | E4 | Open |
 | H5 | The max-flow plan never gets fewer cars out than everyone taking their shortest route, and the gap is largest when one shelter is nearest to most households | E5 | Open |
 
@@ -116,22 +116,25 @@ python experiments/plot_e1.py
 
 We tested both algorithms using random networks of different sizes. Both algorithms returned the same maximum-flow values for each network.
 
-In the synthetic-network tests, Edmonds-Karp was faster than Ford-Fulkerson in the runs we recorded. As the networks got larger, both algorithms took longer to finish.
+In the synthetic-network tests, Edmonds-Karp was faster on networks with 100, 300, and 1,000 nodes. However, Ford-Fulkerson was slightly faster on the 30-node network. On the Pacific Palisades network, Ford-Fulkerson was also faster. Both algorithms returned the same maximum-flow values in every test.
 
 We also tested both algorithms on the Pacific Palisades road network.
 
-| Algorithm | Median Time (ms) | Maximum Flow |
-|---|---:|---:|
-| Ford-Fulkerson | 0.5613 | 3200 |
-| Edmonds-Karp | 0.5984 | 3200 |
+| Network | Ford-Fulkerson (ms) | Edmonds-Karp (ms) | Maximum Flow |
+|---|---:|---:|---:|
+| 30 nodes | 0.0560 | 0.0585 | 154 |
+| 100 nodes | 0.3727 | 0.1536 | 100 |
+| 300 nodes | 1.4406 | 0.9944 | 100 |
+| 1,000 nodes | 8.7607 | 3.9038 | 100 |
+| Pacific Palisades | 0.5566 | 0.8503 | 3200 |
 
 For the Pacific Palisades test, Ford-Fulkerson was slightly faster. Both algorithms returned the same maximum flow.
 
-**Plot:** `results/e1_max_flow.png`
+**Plot:** `results/e1/e1_max_flow.png`
 
-**CSV Files:** `results/e1_max_flow.csv` and `results/e1_palisades.csv`
+**CSV Files:** `results/e1/e1_max_flow.csv`, `results/e1/e1_palisades.csv`, `results/e1/e1_max_flow_runs.csv`, and `results/e1/e1_palisades_runs.csv`
 
-**What it shows:** Edmonds-Karp was faster in our synthetic-network tests, while Ford-Fulkerson was slightly faster on the real road network. Both algorithms produced matching maximum-flow results.
+**What it shows:** These results partly support H1. Edmonds-Karp performed better on the larger synthetic networks, while Ford-Fulkerson performed better on the smallest network and the Pacific Palisades network. This shows that algorithm performance depends on the network being tested. Our experiments do not prove the theoretical complexity bounds.
 
 **Caveats:** We only used one random seed and four synthetic network sizes. We also added a path to make sure the source could reach the sink. Our road capacities are estimates, and the Pacific Palisades test used only one source and sink. More testing would help us understand how the algorithms perform in other situations.
 
