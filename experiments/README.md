@@ -37,12 +37,26 @@ Residential roads are used to identify potential evacuation starting intersectio
 The road data has been converted into the project's FlowNetwork format, preserving all 874 nodes, 2,303 directed edges, and their individual modeled capacities.
 
 A small sample containing 30 nodes and 55 directed edges is saved in data/palisades_sample.graphml. This sample is weakly connected and all its edges have positive capacities.
-To reproduce the results, run:
+
+### Reproducing the road-network experiments
+
+The original Pacific Palisades road network is included in the repository at `data/raw/palisades_roads.graphml`. This fixed dataset contains 874 nodes and 2,303 directed edges with estimated capacities.
+
+To reproduce the experiments, use the committed GraphML file rather than downloading a new road network.
+
+From the repository root, run:
+
 ```bash
-python experiments/fetch_roads.py
-python experiments/convert_roads.py
-python experiments/create_sample.py
+python experiments/e1_max_flow.py
+python experiments/e2_road_closures.py
+python experiments/e3_best_road_to_widen.py
 ```
+
+Each experiment saves its CSV results and figures in its corresponding folder under `results/`.
+
+The `experiments/fetch_roads.py` script can download a new network from OpenStreetMap, but running it may overwrite the committed dataset and produce different results because OpenStreetMap data changes over time.
+
+Experiment running times may also vary depending on the computer and Python environment.
 The scripts require the project's Python dependencies, including OSMnx and NetworkX. Downloading road data also requires internet access.
 
 ## Maximum-Flow Validation
