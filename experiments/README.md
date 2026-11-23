@@ -122,6 +122,23 @@ These exits are preliminary modeling choices. They have not yet been verified as
 
 For the current network model, residential intersections represent potential evacuation origins, and boundary-crossing roads represent potential exits. Future improvements could incorporate population data, road closures, and official evacuation-route information.
 
+### Exit-node verification
+
+Using the committed `data/raw/palisades_roads.graphml` dataset, we identified two terminal-node candidates associated with the documented boundary roads:
+
+| Road | Candidate node ID |
+|---|---|
+| La Mesa Drive | `271821708` |
+| Palisades Drive | `14109380556` |
+
+These candidates each have one neighboring intersection in the saved directed network.
+
+Using these two nodes as candidate exits, a directed reachability check reproduced the reported result: 811 of 813 residential starting nodes could reach at least one candidate, while 2 could not.
+
+These node IDs were reconstructed from the saved network and have not been confirmed as the exact exits selected during the original larger-network analysis. The La Mesa Drive candidate has no incoming road edges in the saved graph and therefore cannot serve as a reachable destination from other intersections.
+
+The candidates are modeling assumptions, not officially designated or verified safe wildfire evacuation routes.
+
 ## E1: Ford-Fulkerson vs Edmonds-Karp
 
 For this experiment, we compared Ford-Fulkerson and Edmonds-Karp to see how their running times change with different network sizes.
