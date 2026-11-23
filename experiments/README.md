@@ -167,7 +167,7 @@ The synthetic networks use random seed 42, with an additional path from the sour
 
 The Pacific Palisades experiment uses the downloaded GraphML road dataset from Issue #10. Both algorithms must be available in the project before running this experiment.
 
-In our tests, Edmonds-Karp was faster on the synthetic networks, while Ford-Fulkerson was slightly faster on the Pacific Palisades network.
+In our tests, Edmonds-Karp was faster on three of the four synthetic network sizes (100, 300, and 1,000 nodes), while Ford-Fulkerson was slightly faster on the 30-node network. Ford-Fulkerson was also faster on the Pacific Palisades road network. These results are based on median running times from five repetitions, and small timing differences may vary across runs and machines.
 
 ## E2: Road Closure Analysis
 
