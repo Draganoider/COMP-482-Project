@@ -12,7 +12,6 @@ from evac.network import FlowNetwork
 
 # Load the Pacific Palisades road network
 def load_road_network():
-    # Load the Pacific Palisades road network
     G = ox.load_graphml("data/raw/palisades_roads.graphml")
 
     network = FlowNetwork()
@@ -29,7 +28,7 @@ def load_road_network():
 
     return network
 
-# Use the same source and sink from Issue #11
+# Using the same source and sink from Issue #11
 def run_road_closure_experiment():
     network = load_road_network()
 

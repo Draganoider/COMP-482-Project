@@ -450,7 +450,7 @@ for node in sorted(residential_start_nodes)[:10]:
     print("Starting node:", node)
 
 
-# Find residential nodes that can reach a candidate exit
+# Find the residential nodes that can reach a candidate exit
 exit_nodes = {inside for inside, outside in confirmed_crossings}
 
 # Reverse the graph to find nodes that can reach the exits

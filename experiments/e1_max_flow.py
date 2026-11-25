@@ -238,7 +238,6 @@ def main():
     run_synthetic_experiments()
     run_palisades_experiment()
 
-    # Generate the graph after saving the experiment results
     subprocess.run(
         [sys.executable, "experiments/plot_e1.py"],
         check=True

@@ -38,8 +38,6 @@ plt.ylabel("Maximum-flow capacity lost (cars/hour)")
 plt.title("E2: Top 10 Road Closures by Capacity Loss")
 plt.grid(axis="y", alpha=0.3)
 
-# Explain the colors
-
 
 plt.legend(handles=[
     Patch(color="orange", label="In original minimum cut"),
